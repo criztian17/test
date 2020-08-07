@@ -13,7 +13,7 @@ namespace test.Common.Dtos.Policy
         /// <summary>
         /// Policy Coverage Porcentage
         /// </summary>
-        public decimal CoveragePorcentage { get; set; }
+        public float CoveragePorcentage { get; set; }
 
         /// <summary>
         /// Policy Start Date

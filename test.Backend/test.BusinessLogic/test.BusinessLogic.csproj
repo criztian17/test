@@ -4,4 +4,16 @@
     <TargetFramework>netcoreapp2.2</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\test.Common\test.Common.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Validators\ClientValidator\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="FluentValidation.AspNetCore" Version="8.5.0" />
+  </ItemGroup>
+
 </Project>

@@ -23,7 +23,8 @@ namespace test.WebApi
             services
                 .AddMvcCoreWithAddOns(Configuration)
                 .AddVersioning()
-                .AddSwaggerDocumentation();
+                .AddSwaggerDocumentation()
+                .AddBusinessLogic();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
