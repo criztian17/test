@@ -3,12 +3,12 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace test.WebApi.Controllers
 {
-    [Route("api/[controller]")]
     [ApiController]
     public class ClientController : ControllerBase
     {
         // GET: api/Client
         [HttpGet]
+        [Route("user/status")]
         public IEnumerable<string> Get()
         {
             return new string[] { "value1", "value2" };
