@@ -1,9 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace test.Common.Dtos.Policy
+﻿namespace test.Common.Dtos.Policy
 {
+    /// <summary>
+    /// PolicyDetailDto Class
+    /// </summary>
     public class PolicyDetailDto: IBaseDto
     {
         public int Id { get; set; }
@@ -19,8 +18,8 @@ namespace test.Common.Dtos.Policy
         public float Price { get; set; }
 
         /// <summary>
-        /// Policy Coverage Porcentage
+        /// Policy Coverage Percentage
         /// </summary>
-        public float CoveragePorcentage { get; set; }
+        public float CoveragePercentage { get; set; }
     }
 }

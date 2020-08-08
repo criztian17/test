@@ -7,9 +7,9 @@
         #endregion
 
         #region Policy
-        public const string ErrorPorcentageRule = "The coverage porcentage must be less than 50.";
-        public const string ErrorGreaterPorcentageRule = "The coverage porcentage must be bigger than 0.";
-        public const string ErrorLessPorcentageRule = "The coverage porcentage must not be bigger than 100.";
+        public const string ErrorPercentageBusinessRule = "The coverage percentage must be equal or less than 50.";
+        public const string ErrorGreaterPorcentageRule = "The coverage percentage must be bigger than 0.";
+        public const string ErrorLessPorcentageRule = "The coverage percentage must not be bigger than 100.";
         #endregion
     }
 }

@@ -1,5 +1,4 @@
 ﻿using FluentValidation;
-using System;
 using test.Common.Dtos.Policy;
 using test.Common.Enums;
 
@@ -11,15 +10,35 @@ namespace test.BusinessLogic.Validators.PolicyValidator
     internal sealed class PolicyValidator : AbstractValidator<PolicyDto>
     {
         /// <summary>
-        /// Valites the coverage porcentage
+        /// Valites the coverage percentage
         /// </summary>
-        internal void ValidateCoveragePorcentage()
+        internal void ValidateCoveragePercentage()
         {
-            RuleFor(x => x.CoveragePorcentage).LessThanOrEqualTo(100).WithMessage(Constants.ConstantMessage.ErrorLessPorcentageRule);
-            RuleFor(x => x.CoveragePorcentage).GreaterThan(0).WithMessage(Constants.ConstantMessage.ErrorGreaterPorcentageRule);
-            RuleFor(x => x.RiskType).Equal((int)RiskTypeEnum.Alto).DependentRules(() => {
-                RuleFor(x => x.CoveragePorcentage).LessThan(50).WithMessage(Constants.ConstantMessage.ErrorPorcentageRule);
+
+            RuleFor(x => x.PolicyDetails).ForEach(policy =>
+            {
+                policy.Must(x => x.CoveragePercentage >= 0).WithMessage(Constants.ConstantMessage.ErrorGreaterPorcentageRule);
             });
+
+            RuleFor(x => x.PolicyDetails).ForEach(policy =>
+            {
+                policy.Must(x => x.CoveragePercentage <= 100).WithMessage(Constants.ConstantMessage.ErrorLessPorcentageRule);
+            });
+
+            ValidateCoveragePercentageBusinessRule();
+        }
+
+
+        internal void ValidateCoveragePercentageBusinessRule()
+        {
+            When(x => x.RiskType == (int)RiskTypeEnum.Alto, () =>
+            {
+                RuleFor(x => x.PolicyDetails).ForEach(policy =>
+                {
+                    policy.Must(x => x.CoveragePercentage <= 50).WithMessage(Constants.ConstantMessage.ErrorPercentageBusinessRule);
+                });
+            });
+
         }
     }
 }

@@ -26,7 +26,7 @@ namespace test.BusinessLogic.Implementation
         {
             return await ExecutionWrapperExtension.ExecuteWrapperAsync<PolicyDto, PolicyBL > (async () =>
             {
-                await ValidateCoveragePorncentage(policy);
+                await ValidateCoveragePerncentage(policy);
 
                 return policy;
             });
@@ -34,14 +34,14 @@ namespace test.BusinessLogic.Implementation
 
         #region Private Methods
         /// <summary>
-        /// Valites the Coverage Porcentage Rules
+        /// Valites the Coverage Percentage Rules
         /// </summary>
         /// <param name="policy"></param>
         /// <returns>string</returns>
-        private async Task<bool> ValidateCoveragePorncentage(PolicyDto policy)
+        private async Task<bool> ValidateCoveragePerncentage(PolicyDto policy)
         {
             PolicyValidator validationRules = new PolicyValidator();
-            validationRules.ValidateCoveragePorcentage();
+            validationRules.ValidateCoveragePercentage();
 
             ValidationResult result = validationRules.Validate(policy);
 
