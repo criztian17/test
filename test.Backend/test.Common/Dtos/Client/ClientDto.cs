@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using test.Common.Dtos.Policy;
 
 namespace test.Common.Dtos.Client
@@ -14,11 +15,15 @@ namespace test.Common.Dtos.Client
         /// <summary>
         /// Client Identification
         /// </summary>
+        [Required]
+        [Display(Name = "Client Identification")]
         public string Identification{get; set;}
 
         /// <summary>
         /// Client Name
         /// </summary>
+        [Required]
+        [Display(Name = "Client Name")]
         public string Name { get; set; }
 
         /// <summary>

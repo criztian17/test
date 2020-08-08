@@ -1,22 +1,21 @@
-﻿using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.ComponentModel.DataAnnotations;
-using test.Common.Dtos.Client;
 
-namespace test.Common.Dtos.Policy
+namespace test.Repository.Entities
 {
     /// <summary>
-    /// PolicyDto Class
+    /// Represents the Policy model
     /// </summary>
-    public class PolicyDto : IBaseDto
+    public class PolicyEntity : IEntity
     {
+        [Key]
         public int Id { get; set; }
 
         /// <summary>
         /// Policy Description
         /// </summary>
         [Required]
+        [MaxLength(255)]
         public string Description { get; set; }
 
         /// <summary>
@@ -29,7 +28,6 @@ namespace test.Common.Dtos.Policy
         /// Policy Start Date
         /// </summary>
         [Required]
-        [DisplayFormat(DataFormatString = "{0:yyyy/MM/dd hh:mm tt}", ApplyFormatInEditMode = false)]
         public DateTime StartDate { get; set; }
 
         /// <summary>
@@ -48,15 +46,12 @@ namespace test.Common.Dtos.Policy
         /// Policy Price
         /// </summary>
         [Required]
-        [DisplayFormat(DataFormatString = "{0:N2}")]
         public float Price { get; set; }
 
         /// <summary>
         /// Policy's Client
         /// </summary>
-        public ClientDto Client { get; set; }
-
-        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
-        public ICollection<PolicyDetailDto> PolicyDetails { get; set; }
+        [Required]
+        public ClientEntity Client { get; set; }
     }
 }

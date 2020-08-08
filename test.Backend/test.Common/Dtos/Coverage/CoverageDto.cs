@@ -1,4 +1,6 @@
-﻿namespace test.Common.Dtos.Coverage
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace test.Common.Dtos.Coverage
 {
     /// <summary>
     /// CoverageDto Class
@@ -10,6 +12,8 @@
         /// <summary>
         /// Coverage Description
         /// </summary>
+        [Required]
+        [Display(Name = "Coverage Description")]
         public string Description { get; set; }
     }
 }

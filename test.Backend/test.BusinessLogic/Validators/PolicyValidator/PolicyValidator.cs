@@ -31,7 +31,7 @@ namespace test.BusinessLogic.Validators.PolicyValidator
 
         internal void ValidateCoveragePercentageBusinessRule()
         {
-            When(x => x.RiskType == (int)RiskTypeEnum.Alto, () =>
+            When(x => x.RiskType == (int)RiskTypeEnum.High, () =>
             {
                 RuleFor(x => x.PolicyDetails).ForEach(policy =>
                 {

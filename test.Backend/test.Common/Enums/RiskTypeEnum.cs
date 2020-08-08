@@ -2,18 +2,21 @@
 
 namespace test.Common.Enums
 {
+    /// <summary>
+    /// Risk Type Enum
+    /// </summary>
     public enum RiskTypeEnum
     {
-        [Description("BAJO")]
-        Bajo = 1,
+        [Description("LOW")]
+        Low = 1,
 
-        [Description("MEDIO")]
-        Medio = 2,
+        [Description("MID")]
+        Mid = 2,
 
-        [Description("MEDIOALTO")]
-        MedioAlto = 3,
+        [Description("MIDHIGH")]
+        MidHigh = 3,
 
-        [Description("ALTO")]
-        Alto = 4,
+        [Description("HIGH")]
+        High = 4,
     }
 }
