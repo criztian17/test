@@ -2,6 +2,8 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using test.Repository;
+using test.Repository.Repositories.Implementations;
+using test.Repository.Repositories.Interfaces;
 
 namespace test.WebApi.Extensions
 {
@@ -13,6 +15,12 @@ namespace test.WebApi.Extensions
             { 
                 cfg.UseSqlServer(configuration.GetConnectionString("DefaultConnection"));
             });
+
+            service.AddScoped<IClientRepository, ClientRepository>();
+            service.AddScoped<ICoverageRepository, CoverageRepository>();
+            service.AddScoped<IPolicyRepository, PolicyRepository>();
+            service.AddScoped<IPolicyDetailRepository, PolicyDetailRepository>();
+
             return service;
         }
     }
