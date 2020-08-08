@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace test.Repository.Entities
@@ -15,7 +16,7 @@ namespace test.Repository.Entities
         /// Policy Description
         /// </summary>
         [Required]
-        [MaxLength(255)]
+        [StringLength(255)]
         public string Description { get; set; }
 
         /// <summary>
@@ -53,5 +54,10 @@ namespace test.Repository.Entities
         /// </summary>
         [Required]
         public ClientEntity Client { get; set; }
+
+        /// <summary>
+        /// Collection of PolicyDetailEntity
+        /// </summary>
+        public ICollection<PolicyDetailEntity> PolicyDetails { get; set; }
     }
 }

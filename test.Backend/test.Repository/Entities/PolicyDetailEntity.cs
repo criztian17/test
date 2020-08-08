@@ -20,5 +20,10 @@ namespace test.Repository.Entities
         /// </summary>
         [Required]
         public float CoveragePercentage { get; set; }
+
+        /// <summary>
+        /// Coverage Type
+        /// </summary>
+        public CoverageEntity Coverage { get; set; }
     }
 }

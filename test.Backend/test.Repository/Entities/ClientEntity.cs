@@ -15,14 +15,14 @@ namespace test.Repository.Entities
         /// Client Identification
         /// </summary>
         [Required]
-        [MaxLength(12)]
+        [StringLength(12)]
         public string Identification { get; set; }
 
         /// <summary>
         /// Client Name
         /// </summary>
         [Required]
-        [MaxLength(50)]
+        [StringLength(50)]
         public string Name { get; set; }
 
         public ICollection<PolicyEntity> Policies { get; set; }
