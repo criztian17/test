@@ -25,8 +25,6 @@ namespace test.Utilities.Extensions
         public static T ExecuteWrapper<T, C>(Func<T> executionBody, Func<Exception, T> doInError, Func<T, T> doInFinally, bool throwException = true) where C : class
         {
             T returnValue = default;
-            //never used?
-            //Guid correlationId = Guid.NewGuid();
             try
             {
                 returnValue = executionBody();
@@ -39,7 +37,6 @@ namespace test.Utilities.Extensions
 
                 if (exception is BusinessException == false)
                 {
-                    ///Escribir en serilog
                 }
 
                 if (doInError == null)
@@ -134,7 +131,6 @@ namespace test.Utilities.Extensions
         public static async Task<T> ExecuteWrapperAsync<T, C>(Func<Task<T>> executionBody, Func<Exception, T> doInError, Func<T, T> doInFinally, bool throwException = true) where C : class
         {
             T returnValue = default(T);
-            Guid correlationId = Guid.NewGuid();
             try
             {
                 returnValue = await executionBody();

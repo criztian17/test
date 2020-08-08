@@ -1,18 +1,14 @@
 ﻿namespace test.Common.Dtos
 {
     /// <summary>
-    /// Base class for Dtos
+    /// Base interface for Dtos
     /// </summary>
-    public class BaseDto
+    public interface IBaseDto
     {
         /// <summary>
-        /// Id
+        /// Generic Id
         /// </summary>
-       public int Id { get; set; }
+       int Id { get; set; }
 
-        /// <summary>
-        /// Name
-        /// </summary>
-        public string Name { get; set; }
     }
 }

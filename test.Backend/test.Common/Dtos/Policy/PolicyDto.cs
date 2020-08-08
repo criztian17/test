@@ -1,19 +1,26 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
+using System.Collections.Generic;
 using test.Common.Dtos.Client;
 
 namespace test.Common.Dtos.Policy
 {
-    public class PolicyDto : BaseDto
+    /// <summary>
+    /// PolicyDto Class
+    /// </summary>
+    public class PolicyDto : IBaseDto
     {
+        public int Id { get; set; }
+
         /// <summary>
         /// Policy Description
         /// </summary>
         public string Description { get; set; }
 
         /// <summary>
-        /// Policy Coverage Porcentage
+        /// Policy Risk Type
         /// </summary>
-        public float CoveragePorcentage { get; set; }
+        public int RiskType { get; set; }
 
         /// <summary>
         /// Policy Start Date
@@ -26,15 +33,11 @@ namespace test.Common.Dtos.Policy
         public DateTime DueDate { get; set; }
 
         /// <summary>
-        /// Policy Price
+        /// Policy's Client
         /// </summary>
-        public decimal Price { get; set; }
-
-        /// <summary>
-        /// Policy Risk Type
-        /// </summary>
-        public int RiskType { get; set; }
-
         public ClientDto Client { get; set; }
+
+        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
+        public ICollection<PolicyDetailDto> PolicyDetails { get; set; }
     }
 }
