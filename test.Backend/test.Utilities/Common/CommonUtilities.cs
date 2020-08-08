@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Reflection;
 
@@ -75,7 +76,30 @@ namespace test.Utilities.Common
             {
                 return "UnknowMethod()";
             }
-        } 
+        }
+
+        /// <summary>
+        /// Cast a list between 2 data types
+        /// </summary>
+        /// <typeparam name="TOrigin">Origin type</typeparam>
+        /// <typeparam name="TResult">Result type</typeparam>
+        /// <param name="list">List to iterate</param>
+        /// <param name="function">Function to evaluate</param>
+        /// <returns>A mapped list</returns>
+        public static List<TResult> ListCast<TOrigin, TResult>(IEnumerable<TOrigin> list, Func<TOrigin, TResult> function)
+        {
+            List<TResult> result = new List<TResult>();
+
+            if (list != null)
+            {
+                foreach (TOrigin inItem in list)
+                {
+                    result.Add(function(inItem));
+                }
+            }
+
+            return result;
+        }
         #endregion
 
         #region "Private Methods"

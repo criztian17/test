@@ -13,6 +13,6 @@ namespace test.BusinessLogic.Interfaces
         /// </summary>
         /// <param name="policy">PolicyDto object</param>
         /// <returns>PolicyDto Object</returns>
-        Task<PolicyDto> CreatePolicy(PolicyDto policy);
+        Task<bool> CreatePolicyAsync(PolicyDto policy);
     }
 }

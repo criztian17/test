@@ -9,7 +9,8 @@ namespace test.WebApi.Extensions
         public static IServiceCollection AddBusinessLogic(this IServiceCollection services)
         {
             services
-                .AddScoped<IPolicyBL, PolicyBL>();
+                .AddScoped<IPolicyBL, PolicyBL>()
+                .AddScoped<IClientBL, ClientBL>();
                
             return services;
         }

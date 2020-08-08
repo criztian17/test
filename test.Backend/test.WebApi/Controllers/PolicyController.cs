@@ -34,7 +34,7 @@ namespace test.WebApi.Controllers
 
         [HttpGet]
         [Route("api/v{version:apiVersion}/policy/{id}")]
-        public string GetPoicyById(int id)
+        public string GetPolicyById(int id)
         {
             return "value";
         }
@@ -44,11 +44,12 @@ namespace test.WebApi.Controllers
         [SwaggerOperation("Create new policy")]
         [SwaggerResponse(400, type: typeof(List<RuleError>))]
         [SwaggerResponse(500, Description = "Internal Server Error")]
-        public async Task<ActionResult<PolicyDto>> CreatePolicy([FromBody] PolicyDto policy)
+        public async Task<ActionResult> CreatePolicy([FromBody] PolicyDto policy)
         {
             return await ExecutionWrapperAPIExtension.ExecuteWrapperAPIAsync<PolicyController>(this.HttpContext, async () =>
             {
-                return new JsonResult(await _policyBL.CreatePolicy(policy));
+                await _policyBL.CreatePolicyAsync(policy);
+                return Ok();
             });
         }
 

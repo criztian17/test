@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using test.BusinessLogic.Interfaces;
 using test.BusinessLogic.Validators.PolicyValidator;
 using test.Common.Dtos.Policy;
+using test.Repository.Repositories.Interfaces;
 using test.Utilities.ApiExceptions;
 using test.Utilities.Extensions;
 
@@ -13,23 +14,29 @@ namespace test.BusinessLogic.Implementation
     /// </summary>
     public class PolicyBL : IPolicyBL
     {
-        public PolicyBL()
-        {
+        #region Attributes
+        private readonly IPolicyRepository _policyRepository;
+        #endregion
 
-        }
+        #region Constructor
+        public PolicyBL(IPolicyRepository policyRepository)
+        {
+            _policyRepository = policyRepository;
+        } 
+        #endregion
         /// <summary>
         /// Create a new Policy
         /// </summary>
         /// <param name="policy">PolicyDto object</param>
         /// <returns>PolicyDto Object</returns>
-        public async Task<PolicyDto> CreatePolicy(PolicyDto policy)
+        public async Task<bool> CreatePolicyAsync(PolicyDto policy)
         {
-            return await ExecutionWrapperExtension.ExecuteWrapperAsync<PolicyDto, PolicyBL > (async () =>
+            return await ExecutionWrapperExtension.ExecuteWrapperAsync<bool,PolicyBL> (async () =>
             {
-                await ValidateCoveragePerncentage(policy);
-
-                return policy;
-            });
+                ValidateCoveragePerncentage(policy);
+                //await _policyRepository.CreateAsync(null);
+                return await Task.FromResult(true);
+            }); 
         }
 
         #region Private Methods
@@ -38,7 +45,7 @@ namespace test.BusinessLogic.Implementation
         /// </summary>
         /// <param name="policy"></param>
         /// <returns>string</returns>
-        private async Task<bool> ValidateCoveragePerncentage(PolicyDto policy)
+        private void ValidateCoveragePerncentage(PolicyDto policy)
         {
             PolicyValidator validationRules = new PolicyValidator();
             validationRules.ValidateCoveragePercentage();
@@ -50,7 +57,7 @@ namespace test.BusinessLogic.Implementation
                 throw new BusinessException(400, result.Errors[0].ErrorMessage);
             }
 
-            return await Task.FromResult(true);
+            return;
         }
         #endregion
     }
