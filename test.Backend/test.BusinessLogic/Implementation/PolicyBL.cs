@@ -3,6 +3,8 @@ using System.Threading.Tasks;
 using test.BusinessLogic.Interfaces;
 using test.BusinessLogic.Validators.PolicyValidator;
 using test.Common.Dtos.Policy;
+using test.Utilities.ApiExceptions;
+using test.Utilities.Extensions;
 
 namespace test.BusinessLogic.Implementation
 {
@@ -20,14 +22,14 @@ namespace test.BusinessLogic.Implementation
         /// </summary>
         /// <param name="policy">PolicyDto object</param>
         /// <returns>PolicyDto Object</returns>
-        public Task<PolicyDto> CreatePolicy(PolicyDto policy)
+        public async Task<PolicyDto> CreatePolicy(PolicyDto policy)
         {
-            if (string.IsNullOrEmpty(ValidateCoveragePorncentage(policy)))
+            return await ExecutionWrapperExtension.ExecuteWrapperAsync<PolicyDto, PolicyBL > (async () =>
             {
+                await ValidateCoveragePorncentage(policy);
 
-            }
-
-            return Task.FromResult(policy);
+                return policy;
+            });
         }
 
         #region Private Methods
@@ -36,7 +38,7 @@ namespace test.BusinessLogic.Implementation
         /// </summary>
         /// <param name="policy"></param>
         /// <returns>string</returns>
-        private string ValidateCoveragePorncentage(PolicyDto policy)
+        private async Task<bool> ValidateCoveragePorncentage(PolicyDto policy)
         {
             PolicyValidator validationRules = new PolicyValidator();
             validationRules.ValidateCoveragePorcentage();
@@ -45,10 +47,10 @@ namespace test.BusinessLogic.Implementation
 
             if (!result.IsValid)
             {
-                return result.Errors[0].ErrorMessage;
+                throw new BusinessException(400, result.Errors[0].ErrorMessage);
             }
-            
-            return string.Empty;
+
+            return await Task.FromResult(true);
         }
         #endregion
     }

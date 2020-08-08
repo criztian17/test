@@ -10,6 +10,7 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.App" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc" Version="2.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Versioning.ApiExplorer" Version="3.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.2.0" PrivateAssets="All" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.2.4" />
@@ -21,6 +22,7 @@
   <ItemGroup>
     <ProjectReference Include="..\test.BusinessLogic\test.BusinessLogic.csproj" />
     <ProjectReference Include="..\test.Common\test.Common.csproj" />
+    <ProjectReference Include="..\test.Utilities\test.Utilities.csproj" />
   </ItemGroup>
 
 </Project>

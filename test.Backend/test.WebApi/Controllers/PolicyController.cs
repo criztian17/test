@@ -1,8 +1,11 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using test.BusinessLogic.Interfaces;
 using test.Common.Dtos.Policy;
+using test.Utilities.ApiExceptions;
+using test.Utilities.Extensions;
 
 namespace test.WebApi.Controllers
 {
@@ -39,12 +42,14 @@ namespace test.WebApi.Controllers
         [HttpPost]
         [Route("api/v{version:apiVersion}/policy/")]
         [SwaggerOperation("Create new policy")]
-        [SwaggerResponse(200, type: typeof(bool))]
-        //[SwaggerResponse(400, type: typeof(List<RuleError>))]
+        [SwaggerResponse(400, type: typeof(List<RuleError>))]
         [SwaggerResponse(500, Description = "Internal Server Error")]
         public async Task<ActionResult<PolicyDto>> CreatePolicy([FromBody] PolicyDto policy)
         {
-            return await _policyBL.CreatePolicy(policy);
+            return await ExecutionWrapperAPIExtension.ExecuteWrapperAPIAsync<PolicyController>(this.HttpContext, async () =>
+            {
+                return new JsonResult(await _policyBL.CreatePolicy(policy));
+            });
         }
 
         [HttpPut]

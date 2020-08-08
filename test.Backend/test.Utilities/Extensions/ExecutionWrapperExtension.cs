@@ -146,7 +146,6 @@ namespace test.Utilities.Extensions
 
                 if (exception is BusinessException == false)
                 {
-                    ///Escribir en serilog
                 }
 
                 if (doInError == null)
