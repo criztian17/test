@@ -2,7 +2,6 @@
 using System.Threading.Tasks;
 using test.BusinessLogic.Interfaces;
 using test.BusinessLogic.Validators.PolicyValidator;
-using test.Common.Enums;
 using test.Common.Dtos.Policy;
 
 namespace test.BusinessLogic.Implementation

@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Configuration;
 using Swashbuckle.AspNetCore.Annotations;
 using System.Threading.Tasks;
 using test.BusinessLogic.Interfaces;
@@ -25,32 +24,27 @@ namespace test.WebApi.Controllers
         #region Actions
         [HttpGet]
         [Route("api/v{version:apiVersion}/policy/")]
-        //[SwaggerOperation("Get resource by Email and PropertyId")]
-        //[SwaggerResponse(200, type: typeof(List<ResourceModel>))]
-        //[SwaggerResponse(400, type: typeof(List<RuleError>))]
-        //[SwaggerResponse(500, Description = "Internal Server Error", type: typeof(ApiError))]
         public IActionResult GetPolicies()
         {
             return Ok(new string[] { "value1", "value2" });
         }
 
-        //[HttpGet]
-        //[Route("api/v{version:apiVersion}/policy/")]
-        //public string GetPoicyById(int id)
-        //{
-        //    return "value";
-        //}
+        [HttpGet]
+        [Route("api/v{version:apiVersion}/policy/{id}")]
+        public string GetPoicyById(int id)
+        {
+            return "value";
+        }
 
         [HttpPost]
         [Route("api/v{version:apiVersion}/policy/")]
-        //[SwaggerOperation("Create new policy")]
-        [SwaggerResponse(200, type: typeof(PolicyDto))]
+        [SwaggerOperation("Create new policy")]
+        [SwaggerResponse(200, type: typeof(bool))]
         //[SwaggerResponse(400, type: typeof(List<RuleError>))]
         [SwaggerResponse(500, Description = "Internal Server Error")]
         public async Task<ActionResult<PolicyDto>> CreatePolicy([FromBody] PolicyDto policy)
         {
-            var result = await _policyBL.CreatePolicy(policy);
-            return Ok(policy);
+            return await _policyBL.CreatePolicy(policy);
         }
 
         [HttpPut]
