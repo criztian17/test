@@ -17,12 +17,12 @@ namespace test.BusinessLogic.Validators.PolicyValidator
 
             RuleFor(x => x.PolicyDetails).ForEach(policy =>
             {
-                policy.Must(x => x.CoveragePercentage >= 0).WithMessage(Constants.ConstantMessage.ErrorGreaterPorcentageRule);
+                policy.Must(x => x.CoveragePercentage >= 0).WithMessage(Constants.ConstantMessage.ErrorGreaterPercentage);
             });
 
             RuleFor(x => x.PolicyDetails).ForEach(policy =>
             {
-                policy.Must(x => x.CoveragePercentage <= 100).WithMessage(Constants.ConstantMessage.ErrorLessPorcentageRule);
+                policy.Must(x => x.CoveragePercentage <= 100).WithMessage(Constants.ConstantMessage.ErrorLessPercentage);
             });
 
             ValidateCoveragePercentageBusinessRule();
@@ -35,7 +35,7 @@ namespace test.BusinessLogic.Validators.PolicyValidator
             {
                 RuleFor(x => x.PolicyDetails).ForEach(policy =>
                 {
-                    policy.Must(x => x.CoveragePercentage <= 50).WithMessage(Constants.ConstantMessage.ErrorPercentageBusinessRule);
+                    policy.Must(x => x.CoveragePercentage <= 50).WithMessage(Constants.ConstantMessage.ErrorPercentageBusiness);
                 });
             });
 

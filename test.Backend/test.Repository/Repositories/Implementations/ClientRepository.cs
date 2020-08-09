@@ -1,4 +1,5 @@
-﻿using test.Repository.Entities;
+﻿using System.Linq;
+using test.Repository.Entities;
 using test.Repository.Repositories.Interfaces;
 
 namespace test.Repository.Repositories.Implementations
@@ -16,7 +17,14 @@ namespace test.Repository.Repositories.Implementations
         public ClientRepository(DataContext context) : base(context)
         {
             this._context = context;
-        } 
+        }
+        #endregion
+
+        #region Public Methods
+        public IQueryable<ClientEntity> GetClientByIdentification(string identification)
+        {
+            return _context.Clients.Where(x => x.Identification == identification);
+        }
         #endregion
     }
 }

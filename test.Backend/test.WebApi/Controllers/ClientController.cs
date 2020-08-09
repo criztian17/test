@@ -26,47 +26,106 @@ namespace test.WebApi.Controllers
 
 
         #region Actions
-
+        /// <summary>
+        /// Get a list of ClientDto
+        /// </summary>
+        /// <returns>ICollection of ClientDto</returns>
         [Route("api/v{version:apiVersion}/client/")]
         [HttpGet]
-        public IEnumerable<string> Get()
-        {
-            return new string[] { "value1", "value2" };
-        }
-
-        [HttpGet]
-        [Route("api/v{version:apiVersion}/client/{id}")]
-        public string GetClientById(int id)
-        {
-            return "value";
-        }
-
-        // POST: api/Client
-        [HttpPost]
-        [Route("api/v{version:apiVersion}/client/")]
-        [SwaggerOperation("Create new client")]
+        [SwaggerOperation("Gets list of ClientDto")]
+        [SwaggerResponse(200, type: typeof(ICollection<ClientDto>))]
         [SwaggerResponse(400, type: typeof(List<RuleError>))]
         [SwaggerResponse(500, Description = "Internal Server Error")]
-        public async Task<ActionResult> CreateClient([FromBody] ClientDto client)
+        public async Task<ActionResult<ICollection<ClientDto>>> Get()
         {
             return await ExecutionWrapperAPIExtension.ExecuteWrapperAPIAsync<ClientController>(this.HttpContext, async () =>
             {
-                await _clientBL.CreateClientAsync(client);
-                return Ok();
+                return new JsonResult(await _clientBL.GetAllAsync());
             });
         }
 
-        //// PUT: api/Client/5
-        //[HttpPut("{id}")]
-        //public void Put(int id, [FromBody] string value)
-        //{
-        //}
+        /// <summary>
+        /// Gets a client by Id
+        /// </summary>
+        /// <param name="id">client id</param>
+        /// <returns>ClientDto</returns>
+        [HttpGet]
+        [Route("api/v{version:apiVersion}/client/{id}")]
+        [SwaggerOperation("Gets a client by Id")]
+        [SwaggerResponse(200, type: typeof(ClientDto))]
+        [SwaggerResponse(400, type: typeof(List<RuleError>))]
+        [SwaggerResponse(500, Description = "Internal Server Error")]
+        public async Task<ActionResult<ClientDto>> GetClientById(int id)
+        {
+            return await ExecutionWrapperAPIExtension.ExecuteWrapperAPIAsync<ClientController>(this.HttpContext, async () =>
+            {
+                return new JsonResult(await _clientBL.GetClientByIdAsync(id));
+            });
+        }
 
-        //// DELETE: api/ApiWithActions/5
-        //[HttpDelete("{id}")]
-        //public void Delete(int id)
-        //{
-        //} 
+        /// <summary>
+        /// Gets a client by identification
+        /// </summary>
+        /// <param name="identification">Client Identification</param>
+        /// <returns>ClientDto<returns>
+        [HttpGet]
+        [Route("api/v{version:apiVersion}/client/identification/{identification}")]
+        [SwaggerOperation("Gets a client by identification")]
+        [SwaggerResponse(200, type: typeof(ClientDto))]
+        [SwaggerResponse(400, type: typeof(List<RuleError>))]
+        [SwaggerResponse(500, Description = "Internal Server Error")]
+        public async Task<ActionResult<ClientDto>> GetClientByIdentification(string identification)
+        {
+            return await ExecutionWrapperAPIExtension.ExecuteWrapperAPIAsync<ClientController>(this.HttpContext, async () =>
+            {
+                return new JsonResult(await _clientBL.GetClientByIdentificationAsync(identification));
+            });
+        }
+
+        // POST: api/Client 
+        [HttpPost]
+        [Route("api/v{version:apiVersion}/client/")]
+        [SwaggerOperation("Create new client")]
+        [SwaggerResponse(200, type: typeof(bool))]
+        [SwaggerResponse(400, type: typeof(List<RuleError>))]
+        [SwaggerResponse(500, Description = "Internal Server Error")]
+        public async Task<ActionResult<bool>> CreateClient([FromBody] ClientDto client)
+        {
+            return await ExecutionWrapperAPIExtension.ExecuteWrapperAPIAsync<ClientController>(this.HttpContext, async () =>
+            {
+                return new JsonResult(await _clientBL.CreateClientAsync(client));
+            });
+        }
+
+        // PUT: api/Client/5
+        [HttpPut]
+        [Route("api/v{version:apiVersion}/client/")]
+        [SwaggerOperation("Update client")]
+        [SwaggerResponse(200, type: typeof(bool))]
+        [SwaggerResponse(400, type: typeof(List<RuleError>))]
+        [SwaggerResponse(500, Description = "Internal Server Error")]
+        public async Task<ActionResult<bool>> UpdateClient(int id, [FromBody] ClientDto client)
+        {
+            return await ExecutionWrapperAPIExtension.ExecuteWrapperAPIAsync<ClientController>(this.HttpContext, async () =>
+            {
+                return new JsonResult(await _clientBL.UpdateClientAsync(id,client));
+            });
+        }
+
+        // DELETE: api/ApiWithActions/5
+        [HttpDelete]
+        [Route("api/v{version:apiVersion}/client/")]
+        [SwaggerOperation("Delete client")]
+        [SwaggerResponse(200, type: typeof(bool))]
+        [SwaggerResponse(400, type: typeof(List<RuleError>))]
+        [SwaggerResponse(500, Description = "Internal Server Error")]
+        public async Task<ActionResult<bool>> DeleteClient(int id)
+        {
+            return await ExecutionWrapperAPIExtension.ExecuteWrapperAPIAsync<ClientController>(this.HttpContext, async () =>
+            {
+                return new JsonResult(await _clientBL.DeleteClientAsync(id));
+            });
+        }
         #endregion
     }
 }
