@@ -5,6 +5,11 @@ namespace test.Repository.Repositories.Interfaces
 {
     public interface IClientRepository : IGenericRepository<ClientEntity>
     {
+        /// <summary>
+        /// Gets an IQueryable of ClientEntity
+        /// </summary>
+        /// <param name="identification">Client identification</param>
+        /// <returns>IQueryable</returns>
         IQueryable<ClientEntity> GetClientByIdentification(string identification);
     }
 }

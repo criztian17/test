@@ -34,9 +34,9 @@ namespace test.BusinessLogic.Interfaces
         Task<bool> ExistAsync(int id);
 
         /// <summary>
-        /// Get a combo of clients
+        /// Get a collection of clients
         /// </summary>
-        /// <returns>IEnumerable</returns>
+        /// <returns>Icollection</returns>
         Task<ICollection<ClientDto>> GetAllAsync();
 
         /// <summary>

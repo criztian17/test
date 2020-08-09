@@ -82,7 +82,11 @@ namespace test.WebApi.Controllers
             });
         }
 
-        // POST: api/Client 
+        /// <summary>
+        /// Creates a new client
+        /// </summary>
+        /// <param name="client">ClientDto object</param>
+        /// <returns>bool</returns>
         [HttpPost]
         [Route("api/v{version:apiVersion}/client/")]
         [SwaggerOperation("Create new client")]
@@ -97,7 +101,12 @@ namespace test.WebApi.Controllers
             });
         }
 
-        // PUT: api/Client/5
+        /// <summary>
+        /// Updates a client
+        /// </summary>
+        /// <param name="id">Client id</param>
+        /// <param name="client">ClientDto object</param>
+        /// <returns>bool</returns>
         [HttpPut]
         [Route("api/v{version:apiVersion}/client/")]
         [SwaggerOperation("Update client")]
@@ -112,7 +121,11 @@ namespace test.WebApi.Controllers
             });
         }
 
-        // DELETE: api/ApiWithActions/5
+        /// <summary>
+        /// Deletes a client
+        /// </summary>
+        /// <param name="id">Client id</param>
+        /// <returns>bool</returns>
         [HttpDelete]
         [Route("api/v{version:apiVersion}/client/")]
         [SwaggerOperation("Delete client")]

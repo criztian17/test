@@ -12,7 +12,7 @@ namespace test.BusinessLogic.Mappers
     /// </summary>
     public static class ClientMapperExtension
     {
-        #region FromClientDtoToEntity
+        #region From ClientDto To ClientEntity
         /// <summary>
         /// Becomes a ClientDto object to ClientEntity object
         /// </summary>
@@ -55,7 +55,7 @@ namespace test.BusinessLogic.Mappers
         }
         #endregion
 
-        #region FromEntityToDto
+        #region From ClientEntity To ClientDto
         /// <summary>
         /// Becomes a ClientEntity object to ClientDto object
         /// </summary>

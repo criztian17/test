@@ -4,7 +4,7 @@ using test.Common.Dtos.Client;
 namespace test.BusinessLogic.Validators.ClientValidator
 {
     /// <summary>
-    /// Class for validating the client required data
+    /// Class for validating the required client data
     /// </summary>
     internal sealed class ClientValidator : AbstractValidator<ClientDto>
     {

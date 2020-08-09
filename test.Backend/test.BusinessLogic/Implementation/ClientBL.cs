@@ -38,7 +38,7 @@ namespace test.BusinessLogic.Implementation
 
                 if (await GetClientByIdentificationAsync(client.Identification , false) != null)
                 {
-                    throw new BusinessException(400, string.Format(Constants.ConstantMessage.ClientExists, client.Identification));
+                    throw new BusinessException(400, string.Format(Constants.ConstantMessage.Exists, "client", "identification", client.Identification));
                 }
 
                 return await _clientRepository.CreateAsync(client.ToEntityMapper<ClientEntity>());
@@ -63,7 +63,7 @@ namespace test.BusinessLogic.Implementation
             {
                 if (!await _clientRepository.ExistAsync(id))
                 {
-                    throw new BusinessException(400, string.Format(Constants.ConstantMessage.ClientNotExist, id));
+                    throw new BusinessException(400, string.Format(Constants.ConstantMessage.NotExist, "client" ,"id" ,id));
 
                 }
                 return true;
@@ -87,8 +87,7 @@ namespace test.BusinessLogic.Implementation
                 await ExistAsync(id);
                 ValidateRequiredData(client);
 
-                await _clientRepository.UpdateAsync(client.ToEntityMapper<ClientEntity>());
-                return await Task.FromResult(true);
+                return await _clientRepository.UpdateAsync(client.ToEntityMapper<ClientEntity>());
             });
         }
 
@@ -105,8 +104,7 @@ namespace test.BusinessLogic.Implementation
                     throw new BusinessException(400, string.Format(Constants.ConstantMessage.ErrorDeleteClient, id));
                 }
 
-                await _clientRepository.DeleteAsync(client);
-                return await Task.FromResult(true);
+                return await _clientRepository.DeleteAsync(client);
             });
         }
 
@@ -120,7 +118,7 @@ namespace test.BusinessLogic.Implementation
                 {
                     if (throwException)
                     {
-                        throw new BusinessException(400, $"The client with identification {identification} does not exist.");
+                        throw new BusinessException(400, string.Format(Constants.ConstantMessage.NotExist, "client" ,"identification", identification));
                     }
 
                     return null;
@@ -134,6 +132,11 @@ namespace test.BusinessLogic.Implementation
         #endregion
 
         #region Private Methods
+
+        /// <summary>
+        /// Validates if the required data is as expected
+        /// </summary>
+        /// <param name="client">ClientDto object</param>
         private void ValidateRequiredData(ClientDto client)
         {
             ClientValidator validationRules = new ClientValidator();

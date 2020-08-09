@@ -1,4 +1,5 @@
-﻿using test.Repository.Entities;
+﻿using System.Linq;
+using test.Repository.Entities;
 using test.Repository.Repositories.Interfaces;
 
 namespace test.Repository.Repositories.Implementations
@@ -16,6 +17,13 @@ namespace test.Repository.Repositories.Implementations
         public CoverageRepository(DataContext context):base(context)
         {
             this._context = context;
+        }
+        #endregion
+
+        #region Public Methods
+        public IQueryable<CoverageEntity> GetCoveragetByDescription(string description)
+        {
+            return _context.Coverages.Where(x => x.Description == description);
         }
         #endregion
     }
