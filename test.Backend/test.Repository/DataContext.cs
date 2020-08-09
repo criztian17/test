@@ -21,10 +21,12 @@ namespace test.Repository
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<ClientEntity>()
-                .HasIndex(p => new { p.Identification});
+                .HasIndex(p => new { p.Identification})
+                .IsUnique();
 
             modelBuilder.Entity<CoverageEntity>()
-                .HasIndex(p => new { p.Description});
+                .HasIndex(p => new { p.Description})
+                .IsUnique();
         } 
         #endregion
     }
