@@ -17,11 +17,12 @@ namespace test.BusinessLogic.Mappers
         /// </summary>
         /// <typeparam name="TR">PolicyDetailEntity object</typeparam>
         /// <param name="origin">PolicyDetailDto object</param>
+        /// <param name="includePolicy">bool value</param>
         /// <returns>PolicyDetailEntity object</returns>
-        public static TR ToEntityMapper<TR>(this PolicyDetailDto origin)
+        public static TR ToEntityMapper<TR>(this PolicyDetailDto origin , bool includePolicy = false)
         where TR : PolicyDetailEntity, new()
         {
-            return origin.ToEntityMapper(new TR());
+            return origin.ToEntityMapper(new TR() , includePolicy);
         }
 
         /// <summary>
@@ -30,8 +31,9 @@ namespace test.BusinessLogic.Mappers
         /// <typeparam name="TR">PolicyDetailEntity object</typeparam>
         /// <param name="origin">PolicyDetailDto object</param>
         /// <param name="result">PolicyDetailEntity object</param>
+        /// <param name="includePolicy">bool value</param>
         /// <returns>PolicyDetailEntity object</returns>
-        public static TR ToEntityMapper<TR>(this PolicyDetailDto origin, TR result)
+        public static TR ToEntityMapper<TR>(this PolicyDetailDto origin, TR result, bool includePolicy = false)
         where TR : PolicyDetailEntity, new()
         {
             if (origin == null)
@@ -49,8 +51,15 @@ namespace test.BusinessLogic.Mappers
                 result.Coverage = origin.Coverage.ToEntityMapper<CoverageEntity>();
                 result.CoveragePercentage = origin.CoveragePercentage;
 
-                //Not require the Policy
-                result.Policy = new PolicyEntity();
+                if (includePolicy)
+                {
+                    result.Policy = origin.Policy.ToEntityMapper<PolicyEntity>();
+                }
+                else
+                {
+                    result.Policy = new PolicyEntity();
+                }
+                
                 
             }
 
@@ -63,25 +72,25 @@ namespace test.BusinessLogic.Mappers
         /// <typeparam name="TR">PolicyDetailEntity</typeparam>
         /// <param name="origin">List of PolicyDetailDto</param>
         /// <returns></returns>
-        public static List<TR> ToEntityListMapper<TR>(this List<PolicyDetailDto> origin)
+        public static List<TR> ToEntityListMapper<TR>(this List<PolicyDetailDto> origin , bool includePolicy = false)
         where TR : PolicyDetailEntity, new()
         {
-            return CommonUtilities.ListCast(origin, (originItem) => { return originItem.ToEntityMapper(new TR()); });
+            return CommonUtilities.ListCast(origin, (originItem) => { return originItem.ToEntityMapper(new TR() , includePolicy); });
         }
 
         #endregion
 
-        #region From CoverageEntity To CoverageDto
+        #region From PolicyDetailEntity To PolicyDetailDto
         /// <summary>
         /// Becomes a PolicyDetailEntity object to PolicyDetailDto object
         /// </summary>
         /// <typeparam name="TR">PolicyDetailDto object</typeparam>
         /// <param name="origin">PolicyDetailEntity object</param>
         /// <returns>PolicyDetailDto object</returns>
-        public static TR ToDtoMapper<TR>(this PolicyDetailEntity origin)
+        public static TR ToDtoMapper<TR>(this PolicyDetailEntity origin ,bool includePolicy = false)
         where TR : PolicyDetailDto, new()
         {
-            return origin.ToDtoMapper(new TR());
+            return origin.ToDtoMapper(new TR() , includePolicy);
         }
 
         /// <summary>
@@ -91,7 +100,7 @@ namespace test.BusinessLogic.Mappers
         /// <param name="origin">PolicyDetailEntity object</param>
         /// <param name="result">PolicyDetailDto object</param>
         /// <returns>PolicyDetailDto object</returns>
-        public static TR ToDtoMapper<TR>(this PolicyDetailEntity origin, TR result)
+        public static TR ToDtoMapper<TR>(this PolicyDetailEntity origin, TR result , bool includePolicy = false)
         where TR : PolicyDetailDto, new()
         {
             if (origin == null)
@@ -108,6 +117,15 @@ namespace test.BusinessLogic.Mappers
                 result.Id = origin.Id;
                 result.CoveragePercentage = origin.CoveragePercentage;
                 result.Coverage = origin.Coverage.ToDtoMapper<CoverageDto>();
+
+                if (includePolicy)
+                {
+                    result.Policy = origin.Policy.ToDtoMapper<PolicyDto>(false);
+                }
+                else
+                {
+                    result.Policy = new PolicyDto();
+                }
             }
 
             return result;
@@ -119,10 +137,10 @@ namespace test.BusinessLogic.Mappers
         /// <typeparam name="TR">PolicyDetailDto</typeparam>
         /// <param name="origin">List of PolicyDetailEntity</param>
         /// <param name="IncludeRelations"></param>
-        public static List<TR> ToDtoListMapper<TR>(this List<PolicyDetailEntity> origin)
+        public static List<TR> ToDtoListMapper<TR>(this List<PolicyDetailEntity> origin , bool includePolicy = false)
         where TR : PolicyDetailDto, new()
         {
-            return CommonUtilities.ListCast(origin, (originItem) => { return originItem.ToDtoMapper(new TR()); });
+            return CommonUtilities.ListCast(origin, (originItem) => { return originItem.ToDtoMapper(new TR() , includePolicy); });
         }
         #endregion
     }

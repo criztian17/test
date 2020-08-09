@@ -11,8 +11,8 @@ namespace test.WebApi.Extensions
             services
                 .AddScoped<IPolicyBL, PolicyBL>()
                 .AddScoped<IClientBL, ClientBL>()
-                .AddScoped<ICoverageBL, CoverageBL>();
-               
+                .AddScoped<ICoverageBL, CoverageBL>()
+                .AddScoped<IPolicyDetailBL, PolicyDetailBL>();
             return services;
         }
     }

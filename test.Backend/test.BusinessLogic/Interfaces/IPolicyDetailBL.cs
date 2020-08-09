@@ -7,7 +7,7 @@ namespace test.BusinessLogic.Interfaces
     /// <summary>
     /// PolicyDetailBL Interface
     /// </summary>
-    interface IPolicyDetailBL 
+    public interface IPolicyDetailBL 
     {
 
         /// <summary>
@@ -18,7 +18,7 @@ namespace test.BusinessLogic.Interfaces
         Task<bool> CreatePolicyDetailtAsync(PolicyDetailDto policyDetail);
 
         /// <summary>
-        /// Gets a pilcyDetail by id
+        /// Gets a policyDetail by id
         /// </summary>
         /// <param name="id">PolicyDetail id</param>
         /// <returns>PolicyDetailDto object</returns>

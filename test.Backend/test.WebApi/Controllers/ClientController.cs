@@ -24,7 +24,6 @@ namespace test.WebApi.Controllers
         }
         #endregion
 
-
         #region Actions
         /// <summary>
         /// Get a list of ClientDto

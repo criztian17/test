@@ -1,40 +1,96 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using test.BusinessLogic.Interfaces;
+using test.BusinessLogic.Mappers;
 using test.Common.Dtos.Policy;
+using test.Repository.Entities;
+using test.Repository.Repositories.Interfaces;
+using test.Utilities.ApiExceptions;
+using test.Utilities.Extensions;
 
 namespace test.BusinessLogic.Implementation
 {
+    /// <summary>
+    /// PolicyDetail Business Logic Class
+    /// </summary>
     public class PolicyDetailBL : IPolicyDetailBL
     {
-        public Task<bool> CreatePolicyDetailtAsync(PolicyDetailDto policyDetail)
+        #region Attributes
+        private readonly IPolicyDetailRepository _policyDetailRepository;
+        #endregion
+
+        #region Constructor
+        public PolicyDetailBL(IPolicyDetailRepository policyDetailRepository)
         {
-            throw new System.NotImplementedException();
+            _policyDetailRepository = policyDetailRepository;
+        }
+        #endregion
+
+        #region Public Methods
+        public async Task<bool> CreatePolicyDetailtAsync(PolicyDetailDto policyDetail)
+        {
+            return await ExecutionWrapperExtension.ExecuteWrapperAsync<bool, PolicyDetailBL>(async () =>
+            {
+                return await _policyDetailRepository.CreateAsync(policyDetail.ToEntityMapper<PolicyDetailEntity>(true));
+            });
         }
 
-        public Task<bool> DeletePolicyAsync(int id)
+        public async Task<bool> DeletePolicyAsync(int id)
         {
-            throw new System.NotImplementedException();
+            return await ExecutionWrapperExtension.ExecuteWrapperAsync<bool, PolicyDetailBL>(async () =>
+            {
+                await ExistAsync(id);
+
+                var policyDetail = await _policyDetailRepository.GetByIdAsync(id);
+
+                return await _policyDetailRepository.DeleteAsync(policyDetail);
+            });
         }
 
-        public Task<bool> ExistAsync(int id)
+        public async Task<bool> ExistAsync(int id)
         {
-            throw new System.NotImplementedException();
+            return await ExecutionWrapperExtension.ExecuteWrapperAsync<bool, PolicyDetailBL>(async () =>
+            {
+                if (!await _policyDetailRepository.ExistAsync(id))
+                {
+                    throw new BusinessException(400, string.Format(Constants.ConstantMessage.NotExist, "policyDetail", "id", id));
+                }
+                return true;
+            });
         }
 
-        public Task<ICollection<PolicyDetailDto>> GetAllAsync()
+        public async Task<ICollection<PolicyDetailDto>> GetAllAsync() 
         {
-            throw new System.NotImplementedException();
+            return await ExecutionWrapperExtension.ExecuteWrapperAsync<ICollection<PolicyDetailDto>, PolicyDetailBL>(async () =>
+            {
+                var result = _policyDetailRepository.GetAll().ToList();
+
+                return await Task.FromResult(result.ToDtoListMapper<PolicyDetailDto>(true));
+            });
         }
 
-        public Task<PolicyDetailDto> GetPolicyDetailByIdAsync(int id)
+        public async Task<PolicyDetailDto> GetPolicyDetailByIdAsync(int id)
         {
-            throw new System.NotImplementedException();
+            return await ExecutionWrapperExtension.ExecuteWrapperAsync<PolicyDetailDto, PolicyDetailBL>(async () =>
+            {
+                await ExistAsync(id);
+
+                var result = await _policyDetailRepository.GetByIdAsync(id);
+
+                return result.ToDtoMapper<PolicyDetailDto>();
+            });
         }
 
-        public Task<bool> UpdatePolicyDetailAsync(int id, PolicyDetailDto policyDetail)
+        public async Task<bool> UpdatePolicyDetailAsync(int id, PolicyDetailDto policyDetail)
         {
-            throw new System.NotImplementedException();
-        }
+            return await ExecutionWrapperExtension.ExecuteWrapperAsync<bool, PolicyDetailBL>(async () =>
+            {
+                await ExistAsync(id);
+
+                return await _policyDetailRepository.UpdateAsync(policyDetail.ToEntityMapper<PolicyDetailEntity>(true));
+            });
+        } 
+        #endregion
     }
 }

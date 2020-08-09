@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using test.Common.Dtos.Client;
 using test.Common.Dtos.Policy;
 using test.Repository.Entities;
@@ -20,7 +21,7 @@ namespace test.BusinessLogic.Mappers
         /// <param name="result">PolicyEntity object</param>
         /// <param name="IncludeRelations">bool</param>
         /// <returns>PolicyEntity object</returns>
-        public static TR ToDtoMapper<TR>(this PolicyDto  origin, bool IncludeRelations = true)
+        public static TR ToEntityMapper<TR>(this PolicyDto origin, bool IncludeRelations = true)
         where TR : PolicyEntity, new()
         {
             return origin.ToEntityMapper(new TR(), IncludeRelations);
@@ -34,7 +35,7 @@ namespace test.BusinessLogic.Mappers
         /// <param name="result">PolicyDto object</param>
         /// <param name="IncludeRelations">bool</param>
         public static TR ToEntityMapper<TR>(this PolicyDto origin, TR result, bool IncludeRelations = true)
-        where TR : PolicyEntity , new()
+        where TR : PolicyEntity, new()
         {
             if (origin == null)
             {
@@ -50,7 +51,8 @@ namespace test.BusinessLogic.Mappers
                 if (IncludeRelations)
                 {
                     result.Client = origin.Client.ToEntityMapper<ClientEntity>();
-                    //result.PolicyDetails = origin.PolicyDetails.ToDtoListMapper<PolicyDetailEntity>();
+
+                    result.PolicyDetails = origin.PolicyDetails.ToList().ToEntityListMapper<PolicyDetailEntity>();
                 }
                 else
                 {
@@ -84,7 +86,7 @@ namespace test.BusinessLogic.Mappers
         }
         #endregion
 
-        #region From EntityToDto
+        #region From PolicyEntity To PolicyDto
         /// <summary>
         /// Becomes a PolicyEntity object to PolicyDto object
         /// </summary>
@@ -93,10 +95,10 @@ namespace test.BusinessLogic.Mappers
         /// <param name="result">PolicyDto object</param>
         /// <param name="IncludeRelations">bool</param>
         /// <returns>PolicyDto object</returns>
-        public static TR ToDtoMapper<TR>(this PolicyEntity origin , bool IncludeRelations = true)
+        public static TR ToDtoMapper<TR>(this PolicyEntity origin, bool IncludeRelations = true)
         where TR : PolicyDto, new()
         {
-            return origin.ToDtoMapper(new TR() , IncludeRelations);
+            return origin.ToDtoMapper(new TR(), IncludeRelations);
         }
 
         /// <summary>
@@ -106,7 +108,7 @@ namespace test.BusinessLogic.Mappers
         /// <param name="origin">PolicyEntity object</param>
         /// <param name="result">PolicyDto object</param>
         /// <param name="IncludeRelations">bool</param>
-        public static TR ToDtoMapper<TR>(this PolicyEntity origin, TR result , bool IncludeRelations = true)
+        public static TR ToDtoMapper<TR>(this PolicyEntity origin, TR result, bool IncludeRelations = true)
         where TR : PolicyDto, new()
         {
             if (origin == null)
@@ -123,7 +125,7 @@ namespace test.BusinessLogic.Mappers
                 if (IncludeRelations)
                 {
                     result.Client = origin.Client.ToDtoMapper<ClientDto>();
-                    //TODO: pending details
+                    result.PolicyDetails = origin.PolicyDetails.ToList().ToDtoListMapper<PolicyDetailDto>();
                 }
 
                 result.Description = origin.Description;
@@ -145,10 +147,10 @@ namespace test.BusinessLogic.Mappers
         /// <param name="origin">List of Entities</param>
         /// <param name="IncludeRelations"></param>
         /// <returns></returns>
-        public static List<TR> ToDtoListMapper<TR>(this List<PolicyEntity> origin , bool IncludeRelations = true)
+        public static List<TR> ToDtoListMapper<TR>(this List<PolicyEntity> origin, bool IncludeRelations = true)
         where TR : PolicyDto, new()
         {
-            return CommonUtilities.ListCast(origin, (originItem) => { return originItem.ToDtoMapper(new TR() , IncludeRelations); });
+            return CommonUtilities.ListCast(origin, (originItem) => { return originItem.ToDtoMapper(new TR(), IncludeRelations); });
         }
 
         #endregion
