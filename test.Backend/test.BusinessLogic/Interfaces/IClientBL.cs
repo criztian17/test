@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc.Rendering;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using test.Common.Dtos.Client;
 
@@ -15,7 +13,7 @@ namespace test.BusinessLogic.Interfaces
         /// Creates new Client
         /// </summary>
         /// <param name="client">ClientDto object</param>
-        /// <returns></returns>
+        /// <returns>bool</returns>
         Task<bool> CreateClientAsync(ClientDto client);
 
         /// <summary>
@@ -58,7 +56,7 @@ namespace test.BusinessLogic.Interfaces
         /// Get a client by Identification
         /// </summary>
         /// <param name="identification"></param>
-        /// <returns></returns>
+        /// <returns>ClientDto</returns>
         Task<ClientDto> GetClientByIdentificationAsync(string identification, bool throwException = true);
     }
 }

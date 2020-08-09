@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 using test.Common.Dtos.Coverage;
 using test.Repository.Entities;
 using test.Utilities.Common;
@@ -52,6 +50,19 @@ namespace test.BusinessLogic.Mappers
 
             return result;
         }
+
+        /// <summary>
+        /// Becomes a List of CoverageDto  to list of entities
+        /// </summary>
+        /// <typeparam name="TR">entities</typeparam>
+        /// <param name="origin">List of CoverageDto</param>
+        /// <returns></returns>
+        public static List<TR> ToEntityListMapper<TR>(this List<CoverageDto> origin)
+        where TR : CoverageEntity , new()
+        {
+            return CommonUtilities.ListCast(origin, (originItem) => { return originItem.ToEntityMapper(new TR()); });
+        }
+
         #endregion
 
         #region From CoverageEntity To CoverageDto
@@ -101,12 +112,11 @@ namespace test.BusinessLogic.Mappers
         /// <typeparam name="TR">CoverageDto</typeparam>
         /// <param name="origin">List of Entities</param>
         /// <param name="IncludeRelations"></param>
-        /// <returns></returns>
         public static List<TR> ToDtoListMapper<TR>(this List<CoverageEntity> origin)
         where TR : CoverageDto, new()
         {
             return CommonUtilities.ListCast(origin, (originItem) => { return originItem.ToDtoMapper(new TR()); });
         }
-#endregion
+        #endregion
     }
 }

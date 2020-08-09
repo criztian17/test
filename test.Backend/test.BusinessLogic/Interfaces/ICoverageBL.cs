@@ -13,7 +13,7 @@ namespace test.BusinessLogic.Interfaces
         /// Creates new Coverage
         /// </summary>
         /// <param name="coverage">CoverageDto object</param>
-        /// <returns></returns>
+        /// <returns>bool</returns>
         Task<bool> CreateCoverageAsync(CoverageDto coverage);
 
         /// <summary>
@@ -56,7 +56,7 @@ namespace test.BusinessLogic.Interfaces
         /// Get a coverage by description
         /// </summary>
         /// <param name="description"></param>
-        /// <returns></returns>
+        /// <returns>CoverageDto</returns>
         Task<CoverageDto> GetCoverageByDescriptionAsync(string description, bool throwException = true);
     }
 }
