@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using test.Common.Dtos.Coverage;
 
 namespace test.Common.Dtos.Policy
 {
@@ -12,6 +13,7 @@ namespace test.Common.Dtos.Policy
         /// <summary>
         /// Policy
         /// </summary>
+        [Required]
         public PolicyDto Policy { get; set; }
 
         /// <summary>
@@ -20,5 +22,11 @@ namespace test.Common.Dtos.Policy
         [Required]
         [DisplayFormat(DataFormatString = "{0:N2}")]
         public float CoveragePercentage { get; set; }
+
+        /// <summary>
+        /// Coverage
+        /// </summary>
+        [Required]
+        public CoverageDto Coverage { get; set; }
     }
 }
