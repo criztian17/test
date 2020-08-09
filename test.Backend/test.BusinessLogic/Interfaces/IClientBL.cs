@@ -59,6 +59,6 @@ namespace test.BusinessLogic.Interfaces
         /// </summary>
         /// <param name="identification"></param>
         /// <returns></returns>
-        Task<ClientDto> GetClientByIdentificationAsync(string identification);
+        Task<ClientDto> GetClientByIdentificationAsync(string identification, bool throwException = true);
     }
 }

@@ -35,8 +35,13 @@ namespace test.BusinessLogic.Implementation
             return await ExecutionWrapperExtension.ExecuteWrapperAsync<bool, ClientBL>(async () =>
             {
                 ValidateRequiredData(client);
-                await _clientRepository.CreateAsync(client.ToEntityMapper<ClientEntity>());
-                return await Task.FromResult(true);
+
+                if (await GetClientByIdentificationAsync(client.Identification , false) != null)
+                {
+                    throw new BusinessException(400, string.Format(Constants.ConstantMessage.ClientExists, client.Identification));
+                }
+
+                return await _clientRepository.CreateAsync(client.ToEntityMapper<ClientEntity>());
             });
         }
 
@@ -45,9 +50,9 @@ namespace test.BusinessLogic.Implementation
             return await ExecutionWrapperExtension.ExecuteWrapperAsync<ClientDto, ClientBL>(async () =>
             {
                 await ExistAsync(id);
-                
+
                 var result = await _clientRepository.GetByIdAsync(id);
-                
+
                 return result.ToDtoMapper<ClientDto>();
             });
         }
@@ -58,7 +63,8 @@ namespace test.BusinessLogic.Implementation
             {
                 if (!await _clientRepository.ExistAsync(id))
                 {
-                    throw new BusinessException(400, string.Format(Constants.ConstantMessage.ErrorClientExists,id));
+                    throw new BusinessException(400, string.Format(Constants.ConstantMessage.ClientNotExist, id));
+
                 }
                 return true;
             });
@@ -74,7 +80,7 @@ namespace test.BusinessLogic.Implementation
             });
         }
 
-        public async Task<bool> UpdateClientAsync(int id , ClientDto client)
+        public async Task<bool> UpdateClientAsync(int id, ClientDto client)
         {
             return await ExecutionWrapperExtension.ExecuteWrapperAsync<bool, ClientBL>(async () =>
             {
@@ -96,7 +102,7 @@ namespace test.BusinessLogic.Implementation
 
                 if (client.ToDtoMapper<ClientDto>().Policies.Any())
                 {
-                    throw new BusinessException(400, string.Format(Constants.ConstantMessage.ErrorDeleteClient , id));
+                    throw new BusinessException(400, string.Format(Constants.ConstantMessage.ErrorDeleteClient, id));
                 }
 
                 await _clientRepository.DeleteAsync(client);
@@ -104,21 +110,25 @@ namespace test.BusinessLogic.Implementation
             });
         }
 
-        public async Task<ClientDto> GetClientByIdentificationAsync(string identification)
+        public async Task<ClientDto> GetClientByIdentificationAsync(string identification , bool throwException = true)
         {
-
             return await ExecutionWrapperExtension.ExecuteWrapperAsync<ClientDto, ClientBL>(async () =>
             {
                 var result = _clientRepository.GetClientByIdentification(identification).FirstOrDefault();
 
                 if (result == null)
                 {
-                    throw new BusinessException(400, $"The client with identification {identification} does not exist.");
+                    if (throwException)
+                    {
+                        throw new BusinessException(400, $"The client with identification {identification} does not exist.");
+                    }
+
+                    return null;
                 }
 
                 return await Task.FromResult(result.ToDtoMapper<ClientDto>());
             });
-           
+
 
         }
         #endregion
@@ -139,5 +149,5 @@ namespace test.BusinessLogic.Implementation
             return;
         }
     }
-        #endregion
+    #endregion
 }

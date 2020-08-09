@@ -26,26 +26,26 @@ namespace test.Repository.Repositories.Implementations
         public async Task<T> GetByIdAsync(int id)
         {
             return await this.context.Set<T>()
-                .AsNoTracking()
-                .FirstOrDefaultAsync(e => e.Id == id);
+            .AsNoTracking()
+            .FirstOrDefaultAsync(e => e.Id == id);
         }
 
-        public async Task CreateAsync(T entity)
+        public async Task<bool> CreateAsync(T entity)
         {
             await this.context.Set<T>().AddAsync(entity);
-            await SaveAllAsync();
+            return await SaveAllAsync();
         }
 
-        public async Task UpdateAsync(T entity)
+        public async Task<bool> UpdateAsync(T entity)
         {
             this.context.Set<T>().Update(entity);
-            await SaveAllAsync();
+            return await SaveAllAsync();
         }
 
-        public async Task DeleteAsync(T entity)
+        public async Task<bool> DeleteAsync(T entity)
         {
             this.context.Set<T>().Remove(entity);
-            await SaveAllAsync();
+            return await SaveAllAsync();
         }
 
         public async Task<bool> ExistAsync(int id)
@@ -56,7 +56,7 @@ namespace test.Repository.Repositories.Implementations
         public async Task<bool> SaveAllAsync()
         {
             return await this.context.SaveChangesAsync() > 0;
-        } 
+        }
         #endregion
     }
 }

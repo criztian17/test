@@ -5,8 +5,9 @@
         #region Client
         public const string ErrorClientName = "The Client Name must not be null or empty.";
         public const string ErrorClientIdentification = "The Client Identification must not be null or empty.";
-        public const string ErrorClientExists = "The client with id {0} does not exist.";
-        public const string ErrorDeleteClient = "The client with id {0} cannot be delete becasue has at least 1 Policy (Active - Canceled)";
+        public const string ClientNotExist = "The client with id {0} does not exist.";
+        public const string ClientExists = "The client with identification {0} already exists.";
+        public const string ErrorDeleteClient = "The client with id {0} cannot be delete becasue has at least 1 Policy (Active - Canceled) not exist.";
         #endregion
 
         #region Policy
