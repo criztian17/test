@@ -18,7 +18,7 @@ namespace test.BusinessLogic.Interfaces
         Task<bool> CreatePolicyDetailtAsync(PolicyDetailDto policyDetail);
 
         /// <summary>
-        /// Gets a policyDetail by id
+        /// Get a policyDetail by id
         /// </summary>
         /// <param name="id">PolicyDetail id</param>
         /// <returns>PolicyDetailDto object</returns>
@@ -26,7 +26,7 @@ namespace test.BusinessLogic.Interfaces
 
 
         /// <summary>
-        /// Validates if the policyDetail exists into the database
+        /// Validate if the policyDetail exists into the database
         /// </summary>
         /// <param name="id">PolicyDetail Id</param>
         /// <returns>bool</returns>
@@ -54,13 +54,13 @@ namespace test.BusinessLogic.Interfaces
         Task<bool> DeletePolicyAsync(int id);
 
         /// <summary>
-        /// Validates the Percentage Business Rule
+        /// Validate the Percentage Business Rule
         /// </summary>
         /// <param name="policyDetail"></param>
         void ValidatePercentageBusinessRule(PolicyDetailDto policyDetail);
 
         /// <summary>
-        /// Validates the requires data
+        /// Validate the requires data
         /// </summary>
         /// <param name="policyDetail">PolicyDetailDto object</param>
         void ValidateRequiredData(PolicyDetailDto policyDetail);

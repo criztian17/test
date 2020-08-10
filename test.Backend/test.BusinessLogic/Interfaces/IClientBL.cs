@@ -17,7 +17,7 @@ namespace test.BusinessLogic.Interfaces
         Task<bool> CreateClientAsync(ClientDto client);
 
         /// <summary>
-        /// Gets a client by id
+        /// Get a client by id
         /// </summary>
         /// <param name="id"></param>
         /// <returns>ClientDto object</returns>
@@ -25,7 +25,7 @@ namespace test.BusinessLogic.Interfaces
 
 
         /// <summary>
-        /// Validates if the client exists into the database
+        /// Validate if the client exists into the database
         /// </summary>
         /// <param name="id">Client Id</param>
         /// <returns>bool</returns>
@@ -60,7 +60,7 @@ namespace test.BusinessLogic.Interfaces
         Task<ClientDto> GetClientByIdentificationAsync(string identification, bool throwException = true);
 
         /// <summary>
-        /// Validates if the required data is as expected
+        /// Validate if the required data is as expected
         /// </summary>
         /// <param name="client">ClientDto object</param>
         void ValidateRequiredData(ClientDto client);

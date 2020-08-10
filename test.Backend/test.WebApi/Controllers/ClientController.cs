@@ -31,7 +31,7 @@ namespace test.WebApi.Controllers
         /// <returns>ICollection of ClientDto</returns>
         [Route("api/v{version:apiVersion}/client/")]
         [HttpGet]
-        [SwaggerOperation("Gets list of Clients")]
+        [SwaggerOperation("Get list of Clients")]
         [SwaggerResponse(200, type: typeof(ICollection<ClientDto>))]
         [SwaggerResponse(400, type: typeof(List<RuleError>))]
         [SwaggerResponse(500, Description = "Internal Server Error")]
@@ -44,13 +44,13 @@ namespace test.WebApi.Controllers
         }
 
         /// <summary>
-        /// Gets a client by Id
+        /// Get a client by Id
         /// </summary>
         /// <param name="id">client id</param>
         /// <returns>ClientDto</returns>
         [HttpGet]
         [Route("api/v{version:apiVersion}/client/{id}")]
-        [SwaggerOperation("Gets a client by Id")]
+        [SwaggerOperation("Get a client by Id")]
         [SwaggerResponse(200, type: typeof(ClientDto))]
         [SwaggerResponse(400, type: typeof(List<RuleError>))]
         [SwaggerResponse(500, Description = "Internal Server Error")]
@@ -63,13 +63,13 @@ namespace test.WebApi.Controllers
         }
 
         /// <summary>
-        /// Gets a client by identification
+        /// Get a client by identification
         /// </summary>
         /// <param name="identification">Client Identification</param>
         /// <returns>ClientDto<returns>
         [HttpGet]
         [Route("api/v{version:apiVersion}/client/identification/{identification}")]
-        [SwaggerOperation("Gets a client by identification")]
+        [SwaggerOperation("Get a client by identification")]
         [SwaggerResponse(200, type: typeof(ClientDto))]
         [SwaggerResponse(400, type: typeof(List<RuleError>))]
         [SwaggerResponse(500, Description = "Internal Server Error")]

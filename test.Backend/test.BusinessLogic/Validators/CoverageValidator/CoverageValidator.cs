@@ -9,7 +9,7 @@ namespace test.BusinessLogic.Validators.CoverageValidator
     internal sealed class CoverageValidator : AbstractValidator<CoverageDto>
     {
         /// <summary>
-        /// Validates the required fields
+        /// Validate the required fields
         /// </summary>
         internal void ValidateRequiredData()
         {

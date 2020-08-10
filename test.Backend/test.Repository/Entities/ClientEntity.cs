@@ -25,6 +25,6 @@ namespace test.Repository.Entities
         [StringLength(50)]
         public string Name { get; set; }
 
-        public ICollection<PolicyEntity> Policies { get; set; }
+        public virtual ICollection<PolicyEntity> Policies { get; set; }
     }
 }

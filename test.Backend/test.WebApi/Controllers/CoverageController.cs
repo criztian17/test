@@ -31,7 +31,7 @@ namespace test.WebApi.Controllers
         /// <returns>ICollection of CoverageDto</returns>
         [Route("api/v{version:apiVersion}/coverage/")]
         [HttpGet]
-        [SwaggerOperation("Gets list of Coverages")]
+        [SwaggerOperation("Get list of Coverages")]
         [SwaggerResponse(200, type: typeof(ICollection<CoverageDto>))]
         [SwaggerResponse(400, type: typeof(List<RuleError>))]
         [SwaggerResponse(500, Description = "Internal Server Error")]
@@ -44,13 +44,13 @@ namespace test.WebApi.Controllers
         }
 
         /// <summary>
-        /// Gets a coverage by Id
+        /// Get a coverage by Id
         /// </summary>
         /// <param name="id">coverage id</param>
         /// <returns>CoverageDto</returns>
         [HttpGet]
         [Route("api/v{version:apiVersion}/coverage/{id}")]
-        [SwaggerOperation("Gets a coverage by Id")]
+        [SwaggerOperation("Get a coverage by Id")]
         [SwaggerResponse(200, type: typeof(CoverageDto))]
         [SwaggerResponse(400, type: typeof(List<RuleError>))]
         [SwaggerResponse(500, Description = "Internal Server Error")]
@@ -63,13 +63,13 @@ namespace test.WebApi.Controllers
         }
 
         /// <summary>
-        /// Gets a coverage by description
+        /// Get a coverage by description
         /// </summary>
         /// <param name="description">coverage description</param>
         /// <returns>CoverageDto<returns>
         [HttpGet]
         [Route("api/v{version:apiVersion}/coverage/description/{description}")]
-        [SwaggerOperation("Gets a coverage by description")]
+        [SwaggerOperation("Get a coverage by description")]
         [SwaggerResponse(200, type: typeof(CoverageDto))]
         [SwaggerResponse(400, type: typeof(List<RuleError>))]
         [SwaggerResponse(500, Description = "Internal Server Error")]

@@ -29,6 +29,7 @@ namespace test.Common.Dtos.Client
         /// <summary>
         /// Collection of PolicyDto
         /// </summary>
+        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public ICollection<PolicyDto> Policies { get; set; }
     }
 }

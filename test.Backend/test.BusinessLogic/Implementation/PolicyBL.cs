@@ -118,7 +118,11 @@ namespace test.BusinessLogic.Implementation
         {
             return await ExecutionWrapperExtension.ExecuteWrapperAsync<ICollection<PolicyDto>, PolicyBL>(async () =>
             {
-                var result = _policyRepository.GetAll().Where(x => x.State == (int)StateEnum.Active).ToList();
+                var result = _policyRepository.GetAll().Include("Client")
+                                                       .Include("PolicyDetails")
+                                                       .Include("PolicyDetails.Coverage")
+                                                       .Where(x => x.State == (int)StateEnum.Active).ToList();
+
 
                 return await Task.FromResult(result.ToDtoListMapper<PolicyDto>());
             });
@@ -143,7 +147,7 @@ namespace test.BusinessLogic.Implementation
 
         #region Private Methods
         /// <summary>
-        /// Validates the required data
+        /// Validate the required data
         /// </summary>
         /// <param name="policy"></param>
         private void ValidateRequiredData(PolicyDto policy)

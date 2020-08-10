@@ -9,7 +9,7 @@ namespace test.BusinessLogic.Validators.ClientValidator
     internal sealed class ClientValidator : AbstractValidator<ClientDto>
     {
         /// <summary>
-        /// Validates the required fields
+        /// Validate the required fields
         /// </summary>
         internal void ValidateRequiredData()
         {

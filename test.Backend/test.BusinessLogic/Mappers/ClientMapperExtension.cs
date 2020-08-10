@@ -92,16 +92,6 @@ namespace test.BusinessLogic.Mappers
                 result.Id = origin.Id;
                 result.Identification = origin.Identification;
                 result.Name = origin.Name;
-
-                if (origin.Policies != null && origin.Policies.Any())
-                {
-                    result.Policies = origin.Policies.ToList().ToDtoListMapper<PolicyDto>(false);
-                }
-
-                if (result.Policies == null)
-                {
-                    result.Policies = new List<PolicyDto>();
-                }
             }
 
             return result;

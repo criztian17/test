@@ -48,17 +48,19 @@ namespace test.BusinessLogic.Mappers
                 }
 
                 result.Id = origin.Id;
-                result.Coverage = origin.Coverage.ToEntityMapper<CoverageEntity>();
+                //result.CoverageId = origin.Coverage.Id;
+                //result.PolicyId = origin.Policy.Id;
+                //result.Coverage = origin.Coverage.ToEntityMapper<CoverageEntity>();
                 result.CoveragePercentage = origin.CoveragePercentage;
 
-                if (includePolicy)
-                {
-                    result.Policy = origin.Policy.ToEntityMapper<PolicyEntity>();
-                }
-                else
-                {
-                    result.Policy = new PolicyEntity();
-                }
+                //if (includePolicy)
+                //{
+                //    result.Policy = origin.Policy.ToEntityMapper<PolicyEntity>();
+                //}
+                //else
+                //{
+                //    result.Policy = new PolicyEntity();
+                //}
                 
                 
             }
@@ -121,10 +123,6 @@ namespace test.BusinessLogic.Mappers
                 if (includePolicy)
                 {
                     result.Policy = origin.Policy.ToDtoMapper<PolicyDto>(false);
-                }
-                else
-                {
-                    result.Policy = new PolicyDto();
                 }
             }
 

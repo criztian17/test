@@ -52,15 +52,11 @@ namespace test.Repository.Entities
         public decimal Price { get; set; }
 
         /// <summary>
-        /// Policy's Client
-        /// </summary>
-        [Required]
-        [ForeignKey("Id")]
-        public ClientEntity Client { get; set; }
-
-        /// <summary>
         /// Collection of PolicyDetailEntity
         /// </summary>
-        public ICollection<PolicyDetailEntity> PolicyDetails { get; set; }
+        public virtual ICollection<PolicyDetailEntity> PolicyDetails { get; set; }
+        [Required]
+        public ClientEntity Client { get; set; }
+        
     }
 }

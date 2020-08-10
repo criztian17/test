@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Newtonsoft.Json;
+using System.ComponentModel.DataAnnotations;
 using test.Common.Dtos.Coverage;
 
 namespace test.Common.Dtos.Policy
@@ -14,6 +15,7 @@ namespace test.Common.Dtos.Policy
         /// Policy
         /// </summary>
         [Required]
+        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public PolicyDto Policy { get; set; }
 
         /// <summary>

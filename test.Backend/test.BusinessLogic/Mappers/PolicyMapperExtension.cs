@@ -21,10 +21,10 @@ namespace test.BusinessLogic.Mappers
         /// <param name="result">PolicyEntity object</param>
         /// <param name="IncludeRelations">bool</param>
         /// <returns>PolicyEntity object</returns>
-        public static TR ToEntityMapper<TR>(this PolicyDto origin, bool IncludeRelations = true)
+        public static TR ToEntityMapper<TR>(this PolicyDto origin)
         where TR : PolicyEntity, new()
         {
-            return origin.ToEntityMapper(new TR(), IncludeRelations);
+            return origin.ToEntityMapper(new TR());
         }
 
         /// <summary>
@@ -34,7 +34,7 @@ namespace test.BusinessLogic.Mappers
         /// <param name="origin">PolicyEntity object</param>
         /// <param name="result">PolicyDto object</param>
         /// <param name="IncludeRelations">bool</param>
-        public static TR ToEntityMapper<TR>(this PolicyDto origin, TR result, bool IncludeRelations = true)
+        public static TR ToEntityMapper<TR>(this PolicyDto origin, TR result)
         where TR : PolicyEntity, new()
         {
             if (origin == null)
@@ -48,22 +48,22 @@ namespace test.BusinessLogic.Mappers
                     result = new TR();
                 }
 
-                if (IncludeRelations)
-                {
-                    result.Client = origin.Client.ToEntityMapper<ClientEntity>();
+                //if (IncludeRelations)
+                //{
+                //    result.Client = origin.Client.ToEntityMapper<ClientEntity>();
 
-                    result.PolicyDetails = origin.PolicyDetails.ToList().ToEntityListMapper<PolicyDetailEntity>();
-                }
-                else
-                {
-                    result.Client = new ClientEntity
-                    {
-                        Id = origin.Client.Id
-                    };
+                //    result.PolicyDetails = origin.PolicyDetails.ToList().ToEntityListMapper<PolicyDetailEntity>();
+                //}
+                //else
+                //{
+                //    result.Client = new ClientEntity
+                //    {
+                //        Id = origin.Client.Id
+                //    };
 
-                    result.PolicyDetails = new List<PolicyDetailEntity>();
-                }
-
+                //    result.PolicyDetails = new List<PolicyDetailEntity>();
+                //}
+                //result.ClientId = origin.Client.Id;
                 result.Description = origin.Description;
                 result.Id = origin.Id;
                 result.Period = origin.Period;
@@ -83,10 +83,10 @@ namespace test.BusinessLogic.Mappers
         /// <param name="origin">List of PolicyDto</param>
         /// <param name="IncludeRelations">bool</param>
         /// <returns></returns>
-        public static List<TR> ToEntityListMapper<TR>(this List<PolicyDto> origin, bool IncludeRelations = true)
+        public static List<TR> ToEntityListMapper<TR>(this List<PolicyDto> origin)
         where TR : PolicyEntity, new()
         {
-            return CommonUtilities.ListCast(origin, (originItem) => { return originItem.ToEntityMapper(new TR(), IncludeRelations); });
+            return CommonUtilities.ListCast(origin, (originItem) => { return originItem.ToEntityMapper(new TR()); });
         }
         #endregion
 
@@ -102,7 +102,7 @@ namespace test.BusinessLogic.Mappers
         public static TR ToDtoMapper<TR>(this PolicyEntity origin, bool IncludeRelations = true)
         where TR : PolicyDto, new()
         {
-            return origin.ToDtoMapper(new TR(), IncludeRelations);
+            return origin.ToDtoMapper(new TR() , IncludeRelations);
         }
 
         /// <summary>
@@ -126,27 +126,18 @@ namespace test.BusinessLogic.Mappers
                     result = new TR();
                 }
 
+
                 if (IncludeRelations)
                 {
-                    if (origin.Client !=null)
-                    {
-                        result.Client = origin.Client.ToDtoMapper<ClientDto>();
-                    }
-                    else
-                    {
-                        result.Client = new ClientDto();
-                    }
-
-                    if (origin.PolicyDetails != null)
-                    {
-                        result.PolicyDetails = origin.PolicyDetails.ToList().ToDtoListMapper<PolicyDetailDto>();
-                    }
-                    else
-                    {
-                        result.PolicyDetails = new List<PolicyDetailDto>();
-                    }
+                    result.Client = origin.Client.ToDtoMapper<ClientDto>();
+                    result.PolicyDetails = origin.PolicyDetails.ToList().ToDtoListMapper<PolicyDetailDto>();
                 }
-
+                else
+                {
+                    result.Client = new ClientDto();
+                    result.PolicyDetails = new List<PolicyDetailDto>();
+                }
+                
                 result.Description = origin.Description;
                 result.Id = origin.Id;
                 result.Period = origin.Period;
@@ -166,10 +157,10 @@ namespace test.BusinessLogic.Mappers
         /// <param name="origin">List of Entities</param>
         /// <param name="IncludeRelations"></param>
         /// <returns></returns>
-        public static List<TR> ToDtoListMapper<TR>(this List<PolicyEntity> origin, bool IncludeRelations = true)
+        public static List<TR> ToDtoListMapper<TR>(this List<PolicyEntity> origin , bool IncludeRelations = true)
         where TR : PolicyDto, new()
         {
-            return CommonUtilities.ListCast(origin, (originItem) => { return originItem.ToDtoMapper(new TR(), IncludeRelations); });
+            return CommonUtilities.ListCast(origin, (originItem) => { return originItem.ToDtoMapper(new TR() , IncludeRelations); });
         }
 
         #endregion

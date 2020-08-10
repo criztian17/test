@@ -17,7 +17,7 @@ namespace test.BusinessLogic.Interfaces
         Task<bool> CreatePolicyAsync(PolicyDto policy);
 
         /// <summary>
-        /// Gets a policy by id
+        /// Get a policy by id
         /// </summary>
         /// <param name="id"></param>
         /// <returns>PolicyDto object</returns>
@@ -25,7 +25,7 @@ namespace test.BusinessLogic.Interfaces
 
 
         /// <summary>
-        /// Validates if the policy exists into the database
+        /// Validate if the policy exists into the database
         /// </summary>
         /// <param name="id">Polocy Id</param>
         /// <returns>bool</returns>

@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace test.Repository.Entities
 {
@@ -13,5 +14,7 @@ namespace test.Repository.Entities
         [Required]
         [StringLength(50)]
         public string Description { get; set; }
+
+        public virtual ICollection<PolicyDetailEntity> PolicyDetails { get; set; }
     }
 }

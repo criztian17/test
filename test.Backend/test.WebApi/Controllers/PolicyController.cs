@@ -31,7 +31,7 @@ namespace test.WebApi.Controllers
         /// <returns>ICollection of CoverageDto</returns>
         [Route("api/v{version:apiVersion}/policy/")]
         [HttpGet]
-        [SwaggerOperation("Gets list of Policies")]
+        [SwaggerOperation("Get list of Policies")]
         [SwaggerResponse(200, type: typeof(ICollection<PolicyDto>))]
         [SwaggerResponse(400, type: typeof(List<RuleError>))]
         [SwaggerResponse(500, Description = "Internal Server Error")]
@@ -45,7 +45,7 @@ namespace test.WebApi.Controllers
 
         [HttpGet]
         [Route("api/v{version:apiVersion}/policy/{id}")]
-        [SwaggerOperation("Gets a policy by Id")]
+        [SwaggerOperation("Get a policy by Id")]
         [SwaggerResponse(200, type: typeof(PolicyDto))]
         [SwaggerResponse(400, type: typeof(List<RuleError>))]
         [SwaggerResponse(500, Description = "Internal Server Error")]
@@ -78,7 +78,7 @@ namespace test.WebApi.Controllers
 
         [HttpDelete]
         [Route("api/v{version:apiVersion}/policy/")]
-        [SwaggerOperation("Marks a policy as canceled")]
+        [SwaggerOperation("Mark a policy as canceled")]
         [SwaggerResponse(400, type: typeof(List<RuleError>))]
         [SwaggerResponse(500, Description = "Internal Server Error")]
         public async Task<ActionResult<bool>> DeleteCoverage(int id)
