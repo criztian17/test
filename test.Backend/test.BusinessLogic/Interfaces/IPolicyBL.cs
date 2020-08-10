@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using test.Common.Dtos.Policy;
 
 namespace test.BusinessLogic.Interfaces
@@ -14,5 +15,42 @@ namespace test.BusinessLogic.Interfaces
         /// <param name="policy">PolicyDto object</param>
         /// <returns>PolicyDto Object</returns>
         Task<bool> CreatePolicyAsync(PolicyDto policy);
+
+        /// <summary>
+        /// Gets a policy by id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns>PolicyDto object</returns>
+        Task<PolicyDto> GetPolicyByIdAsync(int id);
+
+
+        /// <summary>
+        /// Validates if the policy exists into the database
+        /// </summary>
+        /// <param name="id">Polocy Id</param>
+        /// <returns>bool</returns>
+        Task<bool> ExistAsync(int id);
+
+        /// <summary>
+        /// Get a collection of policues
+        /// </summary>
+        /// <returns>ICollection</returns>
+        Task<ICollection<PolicyDto>> GetAllAsync();
+
+        /// <summary>
+        /// Updates a policy
+        /// </summary>
+        /// <param name="client">PolicyDto object</param>
+        /// <param name="id">Policy id</param>
+        /// <returns>bool</returns>
+        Task<bool> UpdateCoverageAsync(int id, PolicyDto coverage);
+
+        /// <summary>
+        /// Cancels a policy 
+        /// </summary>
+        /// <param name="id">Policy Id</param>
+        /// <returns>bool</returns>
+        Task<bool> DeleteCoveragetAsync(int id);
+
     }
 }

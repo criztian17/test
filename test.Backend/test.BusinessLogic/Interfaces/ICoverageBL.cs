@@ -17,7 +17,7 @@ namespace test.BusinessLogic.Interfaces
         Task<bool> CreateCoverageAsync(CoverageDto coverage);
 
         /// <summary>
-        /// Gets a client by id
+        /// Gets a coverage by id
         /// </summary>
         /// <param name="id"></param>
         /// <returns>CoverageDto object</returns>
@@ -40,7 +40,7 @@ namespace test.BusinessLogic.Interfaces
         /// <summary>
         /// Updates a coverage
         /// </summary>
-        /// <param name="client">CoverageDto object</param>
+        /// <param name="coverage">CoverageDto object</param>
         /// <param name="id">Coverage id</param>
         /// <returns>bool</returns>
         Task<bool> UpdateCoverageAsync(int id, CoverageDto coverage);
@@ -58,5 +58,11 @@ namespace test.BusinessLogic.Interfaces
         /// <param name="description"></param>
         /// <returns>CoverageDto</returns>
         Task<CoverageDto> GetCoverageByDescriptionAsync(string description, bool throwException = true);
+
+        /// <summary>
+        /// Validates if the required data is as expected
+        /// </summary>
+        /// <param name="coverage">CoverageDto object</param>
+        void ValidateRequiredData(CoverageDto coverage);
     }
 }

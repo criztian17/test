@@ -43,7 +43,9 @@ namespace test.BusinessLogic.Implementation
                     throw new BusinessException(400, string.Format(Constants.ConstantMessage.Exists, "coverage", "description" , coverage.Description));
                 }
 
-                return await _coverageRepository.CreateAsync(coverage.ToEntityMapper<CoverageEntity>());
+                await _coverageRepository.CreateAsync(coverage.ToEntityMapper<CoverageEntity>());
+
+                return await Task.FromResult(true);
             });
         }
 
@@ -124,14 +126,8 @@ namespace test.BusinessLogic.Implementation
                 return await _coverageRepository.UpdateAsync(coverage.ToEntityMapper<CoverageEntity>());
             });
         }
-        #endregion
 
-        #region Private Methods
-        /// <summary>
-        /// Validates if the required data is as expected
-        /// </summary>
-        /// <param name="client">CoverageDto object</param>
-        private void ValidateRequiredData(CoverageDto coverage)
+        public void ValidateRequiredData(CoverageDto coverage)
         {
             CoverageValidator validationRules = new CoverageValidator();
             validationRules.ValidateRequiredData();
@@ -145,6 +141,7 @@ namespace test.BusinessLogic.Implementation
 
             return;
         }
+
         #endregion
     }
 }

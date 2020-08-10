@@ -58,5 +58,11 @@ namespace test.BusinessLogic.Interfaces
         /// <param name="identification"></param>
         /// <returns>ClientDto</returns>
         Task<ClientDto> GetClientByIdentificationAsync(string identification, bool throwException = true);
+
+        /// <summary>
+        /// Validates if the required data is as expected
+        /// </summary>
+        /// <param name="client">ClientDto object</param>
+        void ValidateRequiredData(ClientDto client);
     }
 }

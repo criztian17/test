@@ -30,10 +30,12 @@ namespace test.Repository.Repositories.Implementations
             .FirstOrDefaultAsync(e => e.Id == id);
         }
 
-        public async Task<bool> CreateAsync(T entity)
+        public async Task<T> CreateAsync(T entity)
         {
             await this.context.Set<T>().AddAsync(entity);
-            return await SaveAllAsync();
+            await SaveAllAsync();
+            
+            return entity ;
         }
 
         public async Task<bool> UpdateAsync(T entity)

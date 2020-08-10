@@ -41,7 +41,9 @@ namespace test.BusinessLogic.Implementation
                     throw new BusinessException(400, string.Format(Constants.ConstantMessage.Exists, "client", "identification", client.Identification));
                 }
 
-                return await _clientRepository.CreateAsync(client.ToEntityMapper<ClientEntity>());
+                await _clientRepository.CreateAsync(client.ToEntityMapper<ClientEntity>());
+               
+                return await Task.FromResult(true);
             });
         }
 
@@ -129,15 +131,8 @@ namespace test.BusinessLogic.Implementation
 
 
         }
-        #endregion
 
-        #region Private Methods
-
-        /// <summary>
-        /// Validates if the required data is as expected
-        /// </summary>
-        /// <param name="client">ClientDto object</param>
-        private void ValidateRequiredData(ClientDto client)
+        public void ValidateRequiredData(ClientDto client)
         {
             ClientValidator validationRules = new ClientValidator();
             validationRules.ValidateRequiredData();
@@ -151,6 +146,7 @@ namespace test.BusinessLogic.Implementation
 
             return;
         }
+
+        #endregion
     }
-    #endregion
 }

@@ -1,8 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using FluentValidation.Results;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using test.BusinessLogic.Interfaces;
 using test.BusinessLogic.Mappers;
+using test.BusinessLogic.Validators.PolicyValidator;
 using test.Common.Dtos.Policy;
 using test.Repository.Entities;
 using test.Repository.Repositories.Interfaces;
@@ -18,12 +20,14 @@ namespace test.BusinessLogic.Implementation
     {
         #region Attributes
         private readonly IPolicyDetailRepository _policyDetailRepository;
+        private readonly ICoverageBL _coverageBL;
         #endregion
 
         #region Constructor
-        public PolicyDetailBL(IPolicyDetailRepository policyDetailRepository)
+        public PolicyDetailBL(IPolicyDetailRepository policyDetailRepository , ICoverageBL coverageBL)
         {
             _policyDetailRepository = policyDetailRepository;
+            _coverageBL = coverageBL;
         }
         #endregion
 
@@ -32,7 +36,11 @@ namespace test.BusinessLogic.Implementation
         {
             return await ExecutionWrapperExtension.ExecuteWrapperAsync<bool, PolicyDetailBL>(async () =>
             {
-                return await _policyDetailRepository.CreateAsync(policyDetail.ToEntityMapper<PolicyDetailEntity>(true));
+                ValidateRequiredData(policyDetail);
+
+                 await _policyDetailRepository.CreateAsync(policyDetail.ToEntityMapper<PolicyDetailEntity>(true));
+
+                return await Task.FromResult(true);
             });
         }
 
@@ -60,7 +68,7 @@ namespace test.BusinessLogic.Implementation
             });
         }
 
-        public async Task<ICollection<PolicyDetailDto>> GetAllAsync() 
+        public async Task<ICollection<PolicyDetailDto>> GetAllAsync()
         {
             return await ExecutionWrapperExtension.ExecuteWrapperAsync<ICollection<PolicyDetailDto>, PolicyDetailBL>(async () =>
             {
@@ -88,9 +96,50 @@ namespace test.BusinessLogic.Implementation
             {
                 await ExistAsync(id);
 
+                ValidateRequiredData(policyDetail);
+
                 return await _policyDetailRepository.UpdateAsync(policyDetail.ToEntityMapper<PolicyDetailEntity>(true));
             });
-        } 
+        }
+
+        public void ValidatePercentageBusinessRule(PolicyDetailDto policyDetail)
+        {
+            PolicyDetailValidator validationRules = new PolicyDetailValidator();
+            validationRules.ValidateCoveragePercentageBusinessRule();
+
+            ValidationResult result = validationRules.Validate(policyDetail);
+
+            if (!result.IsValid)
+            {
+                throw new BusinessException(400, result.Errors[0].ErrorMessage);
+            }
+
+            return;
+        }
+        #endregion
+
+        #region Private Methods
+        private void ValidateRequiredData(PolicyDetailDto policyDetail)
+        {
+            PolicyDetailValidator validationRules = new PolicyDetailValidator();
+            validationRules.ValidateRequiredData();
+
+            ValidationResult result = validationRules.Validate(policyDetail);
+
+            if (!result.IsValid)
+            {
+                var errors = string.Empty;
+
+                foreach (var item in result.Errors)
+                {
+                    errors += $"{item.ErrorMessage} ";
+                }
+
+                throw new BusinessException(400, errors);
+            }
+
+            return;
+        }
         #endregion
     }
 }

@@ -13,7 +13,7 @@ namespace test.Repository.Repositories.Interfaces
 
         Task<T> GetByIdAsync(int id);
 
-        Task<bool> CreateAsync(T entity);
+        Task<T> CreateAsync(T entity);
 
         Task<bool> UpdateAsync(T entity);
 

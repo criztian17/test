@@ -1,4 +1,6 @@
 ﻿using FluentValidation;
+using System.Linq;
+using test.BusinessLogic.Constants;
 using test.Common.Dtos.Policy;
 using test.Common.Enums;
 
@@ -9,36 +11,20 @@ namespace test.BusinessLogic.Validators.PolicyValidator
     /// </summary>
     internal sealed class PolicyValidator : AbstractValidator<PolicyDto>
     {
-        /// <summary>
-        /// Valites the coverage percentage
-        /// </summary>
-        internal void ValidateCoveragePercentage()
+        internal void ValidateRequiredData()
         {
+            RuleFor(x => x.Client).NotNull().WithMessage(string.Format(ConstantMessage.ErrorNull, "Client"));
+            RuleFor(x => x.PolicyDetails).NotNull().WithMessage(string.Format(ConstantMessage.ErrorNull, "PolicyDetail"));
 
-            RuleFor(x => x.PolicyDetails).ForEach(policy =>
+            When(x => x.PolicyDetails != null, () =>
             {
-                policy.Must(x => x.CoveragePercentage >= 0).WithMessage(Constants.ConstantMessage.ErrorGreaterPercentage);
+                RuleFor(x => x.PolicyDetails).Must(x => !x.Any()).WithMessage(ConstantMessage.ErrorPolicyPolicyDetail);
             });
 
-            RuleFor(x => x.PolicyDetails).ForEach(policy =>
-            {
-                policy.Must(x => x.CoveragePercentage <= 100).WithMessage(Constants.ConstantMessage.ErrorLessPercentage);
-            });
-
-            ValidateCoveragePercentageBusinessRule();
+            RuleFor(x => x.RiskType).Must(x => x >= (int)RiskTypeEnum.Low && x <= (int)RiskTypeEnum.High).WithMessage(ConstantMessage.ErrorPolicyRiskType);
+            RuleFor(x => x.Period).GreaterThan(0).WithMessage(string.Format(ConstantMessage.ErrorPolicyPolicyDetail , "Period" , "0"));
+            RuleFor(x => x.Price).GreaterThan(0).WithMessage(string.Format(ConstantMessage.ErrorPolicyPolicyDetail , "Price" , "0"));
         }
-
-
-        internal void ValidateCoveragePercentageBusinessRule()
-        {
-            When(x => x.RiskType == (int)RiskTypeEnum.High, () =>
-            {
-                RuleFor(x => x.PolicyDetails).ForEach(policy =>
-                {
-                    policy.Must(x => x.CoveragePercentage <= 50).WithMessage(Constants.ConstantMessage.ErrorPercentageBusiness);
-                });
-            });
-
-        }
+       
     }
 }

@@ -53,5 +53,11 @@ namespace test.BusinessLogic.Interfaces
         /// <returns>bool</returns>
         Task<bool> DeletePolicyAsync(int id);
 
+        /// <summary>
+        /// Validates the Percentage Business Rule
+        /// </summary>
+        /// <param name="policyDetail"></param>
+        void ValidatePercentageBusinessRule(PolicyDetailDto policyDetail);
+
     }
 }
