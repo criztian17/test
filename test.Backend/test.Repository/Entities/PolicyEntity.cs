@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace test.Repository.Entities
 {
@@ -47,7 +48,8 @@ namespace test.Repository.Entities
         /// Policy Price
         /// </summary>
         [Required]
-        public float Price { get; set; }
+        [Column(TypeName = "decimal(5,2)")]
+        public decimal Price { get; set; }
 
         /// <summary>
         /// Policy's Client

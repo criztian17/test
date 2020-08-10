@@ -18,7 +18,12 @@ namespace test.BusinessLogic.Validators.PolicyValidator
         internal void ValidateRequiredData()
         {
             ValidateCoveragePercentage();
-            RuleFor(x => x.Coverage).NotNull().WithMessage(string.Format(ConstantMessage.ErrorNull , "Coverage")); ;
+            RuleFor(x => x.Coverage).NotNull().WithMessage(string.Format(ConstantMessage.ErrorNull , "Coverage")) ;
+
+            When(x => x.Coverage != null, () =>
+            {
+                RuleFor(x => x.Coverage.Id).GreaterThan(0).WithMessage(string.Format(ConstantMessage.ErrorRequiredId, "Coverage"));
+            });
         }
 
         internal void ValidateCoveragePercentageBusinessRule()

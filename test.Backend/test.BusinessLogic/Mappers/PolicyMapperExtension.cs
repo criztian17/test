@@ -56,7 +56,11 @@ namespace test.BusinessLogic.Mappers
                 }
                 else
                 {
-                    result.Client = new ClientEntity();
+                    result.Client = new ClientEntity
+                    {
+                        Id = origin.Client.Id
+                    };
+
                     result.PolicyDetails = new List<PolicyDetailEntity>();
                 }
 

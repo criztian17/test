@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace test.Repository.Entities
 {
@@ -19,7 +20,8 @@ namespace test.Repository.Entities
         /// Policy Coverage Percentage
         /// </summary>
         [Required]
-        public float CoveragePercentage { get; set; }
+        [Column(TypeName = "decimal(5,2)")]
+        public decimal CoveragePercentage { get; set; }
 
         /// <summary>
         /// Coverage Type

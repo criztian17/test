@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using test.Repository;
 
 namespace test.Repository.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20200810060518_DecimalColumn")]
+    partial class DecimalColumn
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -80,8 +82,7 @@ namespace test.Repository.Migrations
 
                     b.Property<int?>("CoverageId");
 
-                    b.Property<decimal>("CoveragePercentage")
-                        .HasColumnType("decimal(5,2)");
+                    b.Property<float>("CoveragePercentage");
 
                     b.Property<int>("PolicyId");
 
@@ -109,7 +110,7 @@ namespace test.Repository.Migrations
                     b.Property<int>("Period");
 
                     b.Property<decimal>("Price")
-                        .HasColumnType("decimal(5,2)");
+                        .HasColumnType("decimal");
 
                     b.Property<int>("RiskType");
 

@@ -20,14 +20,12 @@ namespace test.BusinessLogic.Implementation
     {
         #region Attributes
         private readonly IPolicyDetailRepository _policyDetailRepository;
-        private readonly ICoverageBL _coverageBL;
         #endregion
 
         #region Constructor
-        public PolicyDetailBL(IPolicyDetailRepository policyDetailRepository , ICoverageBL coverageBL)
+        public PolicyDetailBL(IPolicyDetailRepository policyDetailRepository)
         {
             _policyDetailRepository = policyDetailRepository;
-            _coverageBL = coverageBL;
         }
         #endregion
 
@@ -37,8 +35,6 @@ namespace test.BusinessLogic.Implementation
             return await ExecutionWrapperExtension.ExecuteWrapperAsync<bool, PolicyDetailBL>(async () =>
             {
                 ValidateRequiredData(policyDetail);
-
-                _coverageBL.ValidateRequiredData(policyDetail.Coverage);
 
                  await _policyDetailRepository.CreateAsync(policyDetail.ToEntityMapper<PolicyDetailEntity>(true));
 
@@ -100,8 +96,6 @@ namespace test.BusinessLogic.Implementation
 
                 ValidateRequiredData(policyDetail);
 
-                _coverageBL.ValidateRequiredData(policyDetail.Coverage);
-
                 return await _policyDetailRepository.UpdateAsync(policyDetail.ToEntityMapper<PolicyDetailEntity>(true));
             });
         }
@@ -120,10 +114,8 @@ namespace test.BusinessLogic.Implementation
 
             return;
         }
-        #endregion
 
-        #region Private Methods
-        private void ValidateRequiredData(PolicyDetailDto policyDetail)
+        public void ValidateRequiredData(PolicyDetailDto policyDetail)
         {
             PolicyDetailValidator validationRules = new PolicyDetailValidator();
             validationRules.ValidateRequiredData();

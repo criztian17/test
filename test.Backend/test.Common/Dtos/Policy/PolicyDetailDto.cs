@@ -21,7 +21,7 @@ namespace test.Common.Dtos.Policy
         /// </summary>
         [Required]
         [DisplayFormat(DataFormatString = "{0:N2}")]
-        public float CoveragePercentage { get; set; }
+        public decimal CoveragePercentage { get; set; }
 
         /// <summary>
         /// Coverage

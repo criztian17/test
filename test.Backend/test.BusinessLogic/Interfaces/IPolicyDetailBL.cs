@@ -59,5 +59,10 @@ namespace test.BusinessLogic.Interfaces
         /// <param name="policyDetail"></param>
         void ValidatePercentageBusinessRule(PolicyDetailDto policyDetail);
 
+        /// <summary>
+        /// Validates the requires data
+        /// </summary>
+        /// <param name="policyDetail">PolicyDetailDto object</param>
+        void ValidateRequiredData(PolicyDetailDto policyDetail);
     }
 }

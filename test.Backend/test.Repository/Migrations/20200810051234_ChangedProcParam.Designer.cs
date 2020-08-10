@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using test.Repository;
 
 namespace test.Repository.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20200810051234_ChangedProcParam")]
+    partial class ChangedProcParam
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -59,19 +61,6 @@ namespace test.Repository.Migrations
                     b.ToTable("Coverages");
                 });
 
-            modelBuilder.Entity("test.Repository.Entities.EntityHelper.ResultEntityHelper", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("ErrorMessage");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("ResultEntityHelpers");
-                });
-
             modelBuilder.Entity("test.Repository.Entities.PolicyDetailEntity", b =>
                 {
                     b.Property<int>("Id")
@@ -80,8 +69,7 @@ namespace test.Repository.Migrations
 
                     b.Property<int?>("CoverageId");
 
-                    b.Property<decimal>("CoveragePercentage")
-                        .HasColumnType("decimal(5,2)");
+                    b.Property<float>("CoveragePercentage");
 
                     b.Property<int>("PolicyId");
 
@@ -108,8 +96,7 @@ namespace test.Repository.Migrations
 
                     b.Property<int>("Period");
 
-                    b.Property<decimal>("Price")
-                        .HasColumnType("decimal(5,2)");
+                    b.Property<double>("Price");
 
                     b.Property<int>("RiskType");
 

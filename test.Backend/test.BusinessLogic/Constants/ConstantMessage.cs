@@ -1,5 +1,8 @@
 ﻿namespace test.BusinessLogic.Constants
 {
+    /// <summary>
+    /// Constant Messages Class
+    /// </summary>
     public static class ConstantMessage
     {
         #region Common
@@ -8,6 +11,7 @@
         public const string Greater = "The {0} must be greater than {1}";
         public const string Less = "The {0} must be less than {1}";
         public const string ErrorNull = "The {0} must be not null.";
+        public const string ErrorRequiredId = "The {0}Id is required.";
 
         #endregion
 

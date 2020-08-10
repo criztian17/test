@@ -46,16 +46,13 @@ namespace test.Repository.Repositories.Implementations
             }
         }
 
-        public async Task<T> CreateAsync(T entity , bool Commit = true)
+        public async Task<T> CreateAsync(T entity)
         {
             try
             {
                 await this._unitOfWork.DataContext.Set<T>().AddAsync(entity);
 
-                if (Commit)
-                {
-                    await _unitOfWork.CommitAsync(); 
-                }
+                await _unitOfWork.CommitAsync();
 
                 return entity;
             }
@@ -65,12 +62,12 @@ namespace test.Repository.Repositories.Implementations
             }
         }
 
-        public async Task<bool> UpdateAsync(T entity , bool Commit = true)
+        public async Task<bool> UpdateAsync(T entity )
         {
             try
             {
                 this._unitOfWork.DataContext.Set<T>().Update(entity);
-                return Commit ? await _unitOfWork.CommitAsync() : true;
+                return await _unitOfWork.CommitAsync();
             }
             catch (Exception ex)
             {
@@ -78,12 +75,12 @@ namespace test.Repository.Repositories.Implementations
             }
         }
 
-        public async Task<bool> DeleteAsync(T entity , bool Commit = true)
+        public async Task<bool> DeleteAsync(T entity)
         {
             try
             {
                 this._unitOfWork.DataContext.Set<T>().Remove(entity);
-                return Commit ? await _unitOfWork.CommitAsync() : true;
+                return await _unitOfWork.CommitAsync();
             }
             catch (Exception ex)
             {

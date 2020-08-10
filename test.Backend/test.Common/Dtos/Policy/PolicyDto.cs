@@ -29,7 +29,7 @@ namespace test.Common.Dtos.Policy
         /// Policy Start Date
         /// </summary>
         [Required]
-        [DisplayFormat(DataFormatString = "{0:yyyy/MM/dd hh:mm tt}", ApplyFormatInEditMode = false)]
+        [DisplayFormat(DataFormatString = "{0:yyyy/MM/dd}", ApplyFormatInEditMode = false)]
         public DateTime StartDate { get; set; }
 
         /// <summary>
@@ -42,14 +42,14 @@ namespace test.Common.Dtos.Policy
         /// Policy State
         /// </summary>
         [Required]
-        public int State { get; set; }
+        public int State { get; set; } 
 
         /// <summary>
         /// Policy Price
         /// </summary>
         [Required]
         [DisplayFormat(DataFormatString = "{0:N2}")]
-        public float Price { get; set; }
+        public decimal Price { get; set; }
 
         /// <summary>
         /// Policy's Client

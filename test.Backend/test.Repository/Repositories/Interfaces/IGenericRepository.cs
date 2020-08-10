@@ -13,11 +13,11 @@ namespace test.Repository.Repositories.Interfaces
 
         Task<T> GetByIdAsync(int id);
 
-        Task<T> CreateAsync(T entity , bool Commit = true);
+        Task<T> CreateAsync(T entity);
 
-        Task<bool> UpdateAsync(T entity , bool Commit = true);
+        Task<bool> UpdateAsync(T entity);
 
-        Task<bool> DeleteAsync(T entity , bool Commit = true);
+        Task<bool> DeleteAsync(T entity);
 
         Task<bool> ExistAsync(int id);
     }

@@ -14,11 +14,15 @@ namespace test.BusinessLogic.Validators.PolicyValidator
         internal void ValidateRequiredData()
         {
             RuleFor(x => x.Client).NotNull().WithMessage(string.Format(ConstantMessage.ErrorNull, "Client"));
+            When(x => x.Client != null, () => 
+            {
+                RuleFor(x => x.Client.Id).GreaterThan(0).WithMessage(string.Format(ConstantMessage.ErrorRequiredId, "Client"));
+            });  
             RuleFor(x => x.PolicyDetails).NotNull().WithMessage(string.Format(ConstantMessage.ErrorNull, "PolicyDetail"));
 
             When(x => x.PolicyDetails != null, () =>
             {
-                RuleFor(x => x.PolicyDetails).Must(x => !x.Any()).WithMessage(ConstantMessage.ErrorPolicyPolicyDetail);
+                RuleFor(x => x.PolicyDetails.Count()).GreaterThan(0).WithMessage(ConstantMessage.ErrorPolicyPolicyDetail);
             });
 
             RuleFor(x => x.RiskType).Must(x => x >= (int)RiskTypeEnum.Low && x <= (int)RiskTypeEnum.High).WithMessage(ConstantMessage.ErrorPolicyRiskType);
