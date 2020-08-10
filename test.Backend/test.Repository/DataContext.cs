@@ -30,7 +30,18 @@ namespace test.Repository
             modelBuilder.Entity<CoverageEntity>()
                 .HasIndex(p => new { p.Description})
                 .IsUnique();
-        } 
+
+            modelBuilder.Entity<PolicyEntity>()
+               .HasOne(c => c.Client)
+               .WithMany(p => p.Policies);
+
+            modelBuilder.Entity<PolicyDetailEntity>()
+               .HasOne(p => p.Policy)
+               .WithMany(pd => pd.PolicyDetails);
+
+            modelBuilder.Entity<PolicyDetailEntity>()
+              .HasOne(c => c.Coverage);
+        }
         #endregion
     }
 }

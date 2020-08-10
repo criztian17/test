@@ -31,7 +31,7 @@ namespace test.WebApi.Controllers
         /// <returns>ICollection of CoverageDto</returns>
         [Route("api/v{version:apiVersion}/coverage/")]
         [HttpGet]
-        [SwaggerOperation("Gets list of CoverageDto")]
+        [SwaggerOperation("Gets list of Coverages")]
         [SwaggerResponse(200, type: typeof(ICollection<CoverageDto>))]
         [SwaggerResponse(400, type: typeof(List<RuleError>))]
         [SwaggerResponse(500, Description = "Internal Server Error")]

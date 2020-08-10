@@ -48,7 +48,7 @@ namespace test.Repository.Entities
         /// Policy Price
         /// </summary>
         [Required]
-        [Column(TypeName = "decimal(5,2)")]
+        [Column(TypeName = "decimal(16,2)")]
         public decimal Price { get; set; }
 
         /// <summary>

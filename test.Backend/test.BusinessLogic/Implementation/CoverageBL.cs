@@ -55,9 +55,9 @@ namespace test.BusinessLogic.Implementation
             {
                 await ExistAsync(id);
 
-                var client = await _coverageRepository.GetByIdAsync(id);
+                var coverage = await _coverageRepository.GetByIdAsync(id);
                 
-                return await _coverageRepository.DeleteAsync(client);
+                return await _coverageRepository.DeleteAsync(coverage);
             });
         }
 

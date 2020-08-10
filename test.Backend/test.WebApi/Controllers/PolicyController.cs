@@ -25,18 +25,36 @@ namespace test.WebApi.Controllers
         #endregion
 
         #region Actions
-        [HttpGet]
+        /// <summary>
+        /// Get a list of CoverageDto
+        /// </summary>
+        /// <returns>ICollection of CoverageDto</returns>
         [Route("api/v{version:apiVersion}/policy/")]
-        public IActionResult GetPolicies()
+        [HttpGet]
+        [SwaggerOperation("Gets list of Policies")]
+        [SwaggerResponse(200, type: typeof(ICollection<PolicyDto>))]
+        [SwaggerResponse(400, type: typeof(List<RuleError>))]
+        [SwaggerResponse(500, Description = "Internal Server Error")]
+        public async Task<ActionResult<ICollection<PolicyDto>>> Get()
         {
-            return Ok(new string[] { "value1", "value2" });
+            return await ExecutionWrapperAPIExtension.ExecuteWrapperAPIAsync<CoverageController>(this.HttpContext, async () =>
+            {
+                return new JsonResult(await _policyBL.GetAllActiveAsync());
+            });
         }
 
         [HttpGet]
         [Route("api/v{version:apiVersion}/policy/{id}")]
-        public string GetPolicyById(int id)
+        [SwaggerOperation("Gets a policy by Id")]
+        [SwaggerResponse(200, type: typeof(PolicyDto))]
+        [SwaggerResponse(400, type: typeof(List<RuleError>))]
+        [SwaggerResponse(500, Description = "Internal Server Error")]
+        public async Task<ActionResult<PolicyDto>> GetPolicyById(int id)
         {
-            return "value";
+            return await ExecutionWrapperAPIExtension.ExecuteWrapperAPIAsync<CoverageController>(this.HttpContext, async () =>
+            {
+                return new JsonResult(await _policyBL.GetPolicyByIdAsync(id));
+            });
         }
 
         [HttpPost]
@@ -44,12 +62,11 @@ namespace test.WebApi.Controllers
         [SwaggerOperation("Create new policy")]
         [SwaggerResponse(400, type: typeof(List<RuleError>))]
         [SwaggerResponse(500, Description = "Internal Server Error")]
-        public async Task<ActionResult> CreatePolicy([FromBody] PolicyDto policy)
+        public async Task<ActionResult<bool>> CreatePolicy([FromBody] PolicyDto policy)
         {
             return await ExecutionWrapperAPIExtension.ExecuteWrapperAPIAsync<PolicyController>(this.HttpContext, async () =>
             {
-                await _policyBL.CreatePolicyAsync(policy);
-                return Ok();
+                return new JsonResult( await _policyBL.CreatePolicyAsync(policy));
             });
         }
 
@@ -61,9 +78,16 @@ namespace test.WebApi.Controllers
 
         [HttpDelete]
         [Route("api/v{version:apiVersion}/policy/")]
-        public void Delete(int id)
+        [SwaggerOperation("Marks a policy as canceled")]
+        [SwaggerResponse(400, type: typeof(List<RuleError>))]
+        [SwaggerResponse(500, Description = "Internal Server Error")]
+        public async Task<ActionResult<bool>> DeleteCoverage(int id)
         {
-        } 
+            return await ExecutionWrapperAPIExtension.ExecuteWrapperAPIAsync<CoverageController>(this.HttpContext, async () =>
+            {
+                return new JsonResult(await _policyBL.DeletePolicytAsync(id));
+            });
+        }
         #endregion
     }
 }

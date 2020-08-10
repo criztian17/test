@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using test.BusinessLogic.Interfaces;
+using test.BusinessLogic.Mappers;
 using test.BusinessLogic.Validators.PolicyValidator;
 using test.Common.Dtos.Policy;
 using test.Common.Enums;
@@ -86,27 +87,56 @@ namespace test.BusinessLogic.Implementation
             });
         }
 
-        public Task<bool> DeleteCoveragetAsync(int id)
+        public async Task<bool> DeletePolicytAsync(int id)
         {
-            throw new System.NotImplementedException();
+            return await ExecutionWrapperExtension.ExecuteWrapperAsync<bool, PolicyBL>(async () =>
+            {
+                await ExistAsync(id);
+
+                var policy = await _policyRepository.GetByIdAsync(id);
+
+                policy.State = (int)StateEnum.Canceled;
+
+                return await _policyRepository.UpdateAsync(policy);
+            });
         }
 
-        public Task<bool> ExistAsync(int id)
+        public async Task<bool> ExistAsync(int id)
         {
-            throw new System.NotImplementedException();
+            return await ExecutionWrapperExtension.ExecuteWrapperAsync<bool, PolicyBL>(async () =>
+            {
+                if (!await _policyRepository.ExistAsync(id))
+                {
+                    throw new BusinessException(400, string.Format(Constants.ConstantMessage.NotExist, "policy", "id", id));
+
+                }
+                return true;
+            });
         }
 
-        public Task<ICollection<PolicyDto>> GetAllAsync()
+        public async Task<ICollection<PolicyDto>> GetAllActiveAsync()
         {
-            throw new System.NotImplementedException();
+            return await ExecutionWrapperExtension.ExecuteWrapperAsync<ICollection<PolicyDto>, PolicyBL>(async () =>
+            {
+                var result = _policyRepository.GetAll().Where(x => x.State == (int)StateEnum.Active).ToList();
+
+                return await Task.FromResult(result.ToDtoListMapper<PolicyDto>());
+            });
         }
 
-        public Task<PolicyDto> GetPolicyByIdAsync(int id)
+        public async Task<PolicyDto> GetPolicyByIdAsync(int id)
         {
-            throw new System.NotImplementedException();
+            return await ExecutionWrapperExtension.ExecuteWrapperAsync<PolicyDto, PolicyBL>(async () =>
+            {
+                await ExistAsync(id);
+
+                var result = await _policyRepository.GetByIdAsync(id);
+
+                return result.ToDtoMapper<PolicyDto>();
+            });
         }
 
-        public Task<bool> UpdateCoverageAsync(int id, PolicyDto coverage)
+        public Task<bool> UpdatePolicyAsync(int id, PolicyDto coverage)
         {
             throw new System.NotImplementedException();
         }

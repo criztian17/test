@@ -35,7 +35,7 @@ namespace test.BusinessLogic.Interfaces
         /// Get a collection of policues
         /// </summary>
         /// <returns>ICollection</returns>
-        Task<ICollection<PolicyDto>> GetAllAsync();
+        Task<ICollection<PolicyDto>> GetAllActiveAsync();
 
         /// <summary>
         /// Updates a policy
@@ -43,14 +43,14 @@ namespace test.BusinessLogic.Interfaces
         /// <param name="client">PolicyDto object</param>
         /// <param name="id">Policy id</param>
         /// <returns>bool</returns>
-        Task<bool> UpdateCoverageAsync(int id, PolicyDto coverage);
+        Task<bool> UpdatePolicyAsync(int id, PolicyDto coverage);
 
         /// <summary>
         /// Cancels a policy 
         /// </summary>
         /// <param name="id">Policy Id</param>
         /// <returns>bool</returns>
-        Task<bool> DeleteCoveragetAsync(int id);
+        Task<bool> DeletePolicytAsync(int id);
 
     }
 }
