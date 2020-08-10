@@ -6,6 +6,7 @@ using test.BusinessLogic.Interfaces;
 using test.BusinessLogic.Validators.PolicyValidator;
 using test.Common.Dtos.Policy;
 using test.Common.Enums;
+using test.Repository;
 using test.Repository.Repositories.Interfaces;
 using test.Utilities.ApiExceptions;
 using test.Utilities.Extensions;
@@ -21,16 +22,18 @@ namespace test.BusinessLogic.Implementation
         private readonly IPolicyRepository _policyRepository;
         private readonly IPolicyDetailBL _policyDetailBL;
         private readonly IClientBL _clientBL;
+        private readonly DataContext _dataContext;
         private static string errors;
         #endregion
 
         #region Constructor
-        public PolicyBL(IPolicyRepository policyRepository , IPolicyDetailBL policyDetailBL , IClientBL clientBL)
+        public PolicyBL(IPolicyRepository policyRepository, IPolicyDetailBL policyDetailBL, IClientBL clientBL, DataContext dataContext)
         {
             _policyRepository = policyRepository;
             _policyDetailBL = policyDetailBL;
             _clientBL = clientBL;
-        } 
+            _dataContext = dataContext;
+        }
         #endregion
         /// <summary>
         /// Create a new Policy
@@ -39,7 +42,8 @@ namespace test.BusinessLogic.Implementation
         /// <returns>PolicyDto Object</returns>
         public async Task<bool> CreatePolicyAsync(PolicyDto policy)
         {
-            return await ExecutionWrapperExtension.ExecuteWrapperAsync<bool,PolicyBL> (async () =>
+            //No wrapper because there is a transaction
+            try
             {
                 ValidateRequiredData(policy);
 
@@ -50,14 +54,22 @@ namespace test.BusinessLogic.Implementation
                     policy.PolicyDetails.ToList().ForEach(x => _policyDetailBL.ValidatePercentageBusinessRule(x));
                 }
 
-                //_policyRepository.
+                using (var transaction = _dataContext.Database.BeginTransaction())
+                {
+
+                }
 
                 //await _policyRepository.CreateAsync(null);
-                return await Task.FromResult(true);
-            }); 
+            return await Task.FromResult(true);
+            }
+            catch (System.Exception ex)
+            {
+                throw ex;
+            }
+
         }
 
-       
+
 
         public Task<bool> DeleteCoveragetAsync(int id)
         {
@@ -104,7 +116,7 @@ namespace test.BusinessLogic.Implementation
                 {
                     errors += $"{item.ErrorMessage} ";
                 }
-                
+
                 throw new BusinessException(400, errors);
             }
 

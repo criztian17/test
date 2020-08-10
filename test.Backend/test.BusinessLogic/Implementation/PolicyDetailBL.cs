@@ -38,6 +38,8 @@ namespace test.BusinessLogic.Implementation
             {
                 ValidateRequiredData(policyDetail);
 
+                _coverageBL.ValidateRequiredData(policyDetail.Coverage);
+
                  await _policyDetailRepository.CreateAsync(policyDetail.ToEntityMapper<PolicyDetailEntity>(true));
 
                 return await Task.FromResult(true);
@@ -97,6 +99,8 @@ namespace test.BusinessLogic.Implementation
                 await ExistAsync(id);
 
                 ValidateRequiredData(policyDetail);
+
+                _coverageBL.ValidateRequiredData(policyDetail.Coverage);
 
                 return await _policyDetailRepository.UpdateAsync(policyDetail.ToEntityMapper<PolicyDetailEntity>(true));
             });

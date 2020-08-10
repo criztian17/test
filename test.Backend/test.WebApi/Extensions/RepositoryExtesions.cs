@@ -20,6 +20,7 @@ namespace test.WebApi.Extensions
             service.AddScoped<ICoverageRepository, CoverageRepository>();
             service.AddScoped<IPolicyRepository, PolicyRepository>();
             service.AddScoped<IPolicyDetailRepository, PolicyDetailRepository>();
+            service.AddScoped<IUnitOfWork, UnitOfWork>();
 
             return service;
         }

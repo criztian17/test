@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Linq;
 using System.Threading.Tasks;
 using test.Repository.Entities;
@@ -9,56 +10,99 @@ namespace test.Repository.Repositories.Implementations
     public class GenericRepository<T> : IGenericRepository<T> where T : class, IEntity
     {
         #region Attributes
-        private readonly DataContext context;
+        private readonly IUnitOfWork _unitOfWork;
         #endregion
 
         #region Public Methods
-        public GenericRepository(DataContext context)
+        public GenericRepository(IUnitOfWork unitOfWork)
         {
-            this.context = context;
+            _unitOfWork = unitOfWork;
         }
 
         public IQueryable<T> GetAll()
         {
-            return this.context.Set<T>().AsNoTracking();
+            try
+            {
+                return _unitOfWork.DataContext.Set<T>().AsNoTracking();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
 
         public async Task<T> GetByIdAsync(int id)
         {
-            return await this.context.Set<T>()
-            .AsNoTracking()
-            .FirstOrDefaultAsync(e => e.Id == id);
+            try
+            {
+                return await this._unitOfWork.DataContext.Set<T>()
+                    .AsNoTracking()
+                    .FirstOrDefaultAsync(e => e.Id == id);
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
         }
 
-        public async Task<T> CreateAsync(T entity)
+        public async Task<T> CreateAsync(T entity , bool Commit = true)
         {
-            await this.context.Set<T>().AddAsync(entity);
-            await SaveAllAsync();
-            
-            return entity ;
+            try
+            {
+                await this._unitOfWork.DataContext.Set<T>().AddAsync(entity);
+
+                if (Commit)
+                {
+                    await _unitOfWork.CommitAsync(); 
+                }
+
+                return entity;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
 
-        public async Task<bool> UpdateAsync(T entity)
+        public async Task<bool> UpdateAsync(T entity , bool Commit = true)
         {
-            this.context.Set<T>().Update(entity);
-            return await SaveAllAsync();
+            try
+            {
+                this._unitOfWork.DataContext.Set<T>().Update(entity);
+                return Commit ? await _unitOfWork.CommitAsync() : true;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
 
-        public async Task<bool> DeleteAsync(T entity)
+        public async Task<bool> DeleteAsync(T entity , bool Commit = true)
         {
-            this.context.Set<T>().Remove(entity);
-            return await SaveAllAsync();
+            try
+            {
+                this._unitOfWork.DataContext.Set<T>().Remove(entity);
+                return Commit ? await _unitOfWork.CommitAsync() : true;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
 
         public async Task<bool> ExistAsync(int id)
         {
-            return await this.context.Set<T>().AnyAsync(e => e.Id == id);
+            try
+            {
+                return await this._unitOfWork.DataContext.Set<T>().AnyAsync(e => e.Id == id);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
-
-        public async Task<bool> SaveAllAsync()
-        {
-            return await this.context.SaveChangesAsync() > 0;
-        }
+       
         #endregion
     }
 }

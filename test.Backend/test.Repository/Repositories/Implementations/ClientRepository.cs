@@ -10,20 +10,20 @@ namespace test.Repository.Repositories.Implementations
     public class ClientRepository : GenericRepository<ClientEntity>, IClientRepository
     {
         #region Attibutes
-        private readonly DataContext _context;
+        private readonly IUnitOfWork _unitOfWork;
         #endregion
 
         #region Constructor
-        public ClientRepository(DataContext context) : base(context)
+        public ClientRepository(IUnitOfWork unitOfWork) : base(unitOfWork)
         {
-            this._context = context;
+            this._unitOfWork = unitOfWork;
         }
         #endregion
 
         #region Public Methods
         public IQueryable<ClientEntity> GetClientByIdentification(string identification)
         {
-            return _context.Clients.Where(x => x.Identification == identification);
+            return _unitOfWork.DataContext.Clients.Where(x => x.Identification == identification);
         }
         #endregion
     }

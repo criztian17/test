@@ -7,13 +7,13 @@ namespace test.Repository.Repositories.Implementations
     {
 
         #region Attibutes
-        private readonly DataContext _context;
+        private readonly IUnitOfWork _unitOfWork;
         #endregion
 
         #region Constructor
-        public PolicyDetailRepository(DataContext context) : base(context)
+        public PolicyDetailRepository(IUnitOfWork unitOfWork) : base(unitOfWork)
         {
-            this._context = context;
+            this._unitOfWork = unitOfWork;
         }
         #endregion
     }
