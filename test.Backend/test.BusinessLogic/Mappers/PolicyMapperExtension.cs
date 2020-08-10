@@ -128,8 +128,23 @@ namespace test.BusinessLogic.Mappers
 
                 if (IncludeRelations)
                 {
-                    result.Client = origin.Client.ToDtoMapper<ClientDto>();
-                    result.PolicyDetails = origin.PolicyDetails.ToList().ToDtoListMapper<PolicyDetailDto>();
+                    if (origin.Client !=null)
+                    {
+                        result.Client = origin.Client.ToDtoMapper<ClientDto>();
+                    }
+                    else
+                    {
+                        result.Client = new ClientDto();
+                    }
+
+                    if (origin.PolicyDetails != null)
+                    {
+                        result.PolicyDetails = origin.PolicyDetails.ToList().ToDtoListMapper<PolicyDetailDto>();
+                    }
+                    else
+                    {
+                        result.PolicyDetails = new List<PolicyDetailDto>();
+                    }
                 }
 
                 result.Description = origin.Description;

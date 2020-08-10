@@ -14,6 +14,7 @@ namespace test.Repository.Entities
         /// Policy
         /// </summary>
         [Required]
+        [ForeignKey("Id")]
         public PolicyEntity Policy { get; set; }
 
         /// <summary>
@@ -26,6 +27,7 @@ namespace test.Repository.Entities
         /// <summary>
         /// Coverage Type
         /// </summary>
+        [ForeignKey("Id")]
         public CoverageEntity Coverage { get; set; }
     }
 }

@@ -15,7 +15,7 @@ namespace test.WebApi.Extensions
             { 
                 cfg.UseSqlServer(configuration.GetConnectionString("DefaultConnection"));
             });
-
+            service.AddTransient<Seed>();
             service.AddScoped<IClientRepository, ClientRepository>();
             service.AddScoped<ICoverageRepository, CoverageRepository>();
             service.AddScoped<IPolicyRepository, PolicyRepository>();

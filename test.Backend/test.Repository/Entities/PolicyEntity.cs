@@ -55,6 +55,7 @@ namespace test.Repository.Entities
         /// Policy's Client
         /// </summary>
         [Required]
+        [ForeignKey("Id")]
         public ClientEntity Client { get; set; }
 
         /// <summary>
