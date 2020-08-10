@@ -15,6 +15,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\test.Common\test.Common.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Compile Update="Helpers\Resources\Resource.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>

@@ -11,6 +11,7 @@
         public const string Greater = "The {0} must be greater than {1}";
         public const string Less = "The {0} must be less than {1}";
         public const string ErrorNull = "The {0} must be not null.";
+        public const string ErrorEmpty = "The {0} must be not empty.";
         public const string ErrorRequiredId = "The {0}Id is required.";
 
         #endregion
@@ -33,6 +34,10 @@
 
         #region PolicyDetails
         public const string ErrorPercentageBusiness = "The coverage percentage must be equal or less than 50.";
+        #endregion
+
+        #region User
+        private const string ErrorUserCredentials = "The user or password are incorrect.";
         #endregion
     }
 }

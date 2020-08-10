@@ -15,8 +15,8 @@ namespace test.Repository
         public DbSet<CoverageEntity> Coverages { get; set; }
         public DbSet<PolicyEntity> Policies { get; set; }
         public DbSet<PolicyDetailEntity> PolicyDetails { get; set; }
-
         public DbSet<ResultEntityHelper> ResultEntityHelpers { get; set; }
+        public DbSet<UserEntity> Users { get; set; }
 
         #endregion
 
@@ -41,6 +41,10 @@ namespace test.Repository
 
             modelBuilder.Entity<PolicyDetailEntity>()
               .HasOne(c => c.Coverage);
+
+            modelBuilder.Entity<UserEntity>()
+               .HasIndex(p => new { p.Password })
+               .IsUnique();
         }
         #endregion
     }
