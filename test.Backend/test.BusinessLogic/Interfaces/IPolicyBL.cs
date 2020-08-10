@@ -32,10 +32,10 @@ namespace test.BusinessLogic.Interfaces
         Task<bool> ExistAsync(int id);
 
         /// <summary>
-        /// Get a collection of policues
+        /// Get a collection of policies
         /// </summary>
         /// <returns>ICollection</returns>
-        Task<ICollection<PolicyDto>> GetAllActiveAsync();
+        Task<ICollection<PolicyDto>> GetAllWithRelationsAsync();
 
         /// <summary>
         /// Updates a policy

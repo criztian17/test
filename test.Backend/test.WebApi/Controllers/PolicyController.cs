@@ -31,7 +31,7 @@ namespace test.WebApi.Controllers
         /// <returns>ICollection of CoverageDto</returns>
         [Route("api/v{version:apiVersion}/policy/")]
         [HttpGet]
-        [SwaggerOperation("Get list of Policies")]
+        [SwaggerOperation("Get a list of Policies")]
         [SwaggerResponse(200, type: typeof(ICollection<PolicyDto>))]
         [SwaggerResponse(400, type: typeof(List<RuleError>))]
         [SwaggerResponse(500, Description = "Internal Server Error")]
@@ -39,7 +39,7 @@ namespace test.WebApi.Controllers
         {
             return await ExecutionWrapperAPIExtension.ExecuteWrapperAPIAsync<CoverageController>(this.HttpContext, async () =>
             {
-                return new JsonResult(await _policyBL.GetAllActiveAsync());
+                return new JsonResult(await _policyBL.GetAllWithRelationsAsync());
             });
         }
 
@@ -68,12 +68,6 @@ namespace test.WebApi.Controllers
             {
                 return new JsonResult( await _policyBL.CreatePolicyAsync(policy));
             });
-        }
-
-        [HttpPut]
-        [Route("api/v{version:apiVersion}/policy/")]
-        public void Put(int id, [FromBody] string value)
-        {
         }
 
         [HttpDelete]

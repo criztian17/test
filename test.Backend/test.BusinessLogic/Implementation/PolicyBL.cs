@@ -114,14 +114,13 @@ namespace test.BusinessLogic.Implementation
             });
         }
 
-        public async Task<ICollection<PolicyDto>> GetAllActiveAsync()
+        public async Task<ICollection<PolicyDto>> GetAllWithRelationsAsync()
         {
             return await ExecutionWrapperExtension.ExecuteWrapperAsync<ICollection<PolicyDto>, PolicyBL>(async () =>
             {
                 var result = _policyRepository.GetAll().Include("Client")
                                                        .Include("PolicyDetails")
-                                                       .Include("PolicyDetails.Coverage")
-                                                       .Where(x => x.State == (int)StateEnum.Active).ToList();
+                                                       .Include("PolicyDetails.Coverage").ToList();
 
 
                 return await Task.FromResult(result.ToDtoListMapper<PolicyDto>());
