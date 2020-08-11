@@ -43,7 +43,7 @@ namespace test.Repository
               .HasOne(c => c.Coverage);
 
             modelBuilder.Entity<UserEntity>()
-               .HasIndex(p => new { p.Password })
+               .HasIndex(p => new { p.UserLogin })
                .IsUnique();
         }
         #endregion

@@ -1,4 +1,10 @@
 ﻿using FluentValidation.Results;
+using Microsoft.Extensions.Configuration;
+using Microsoft.IdentityModel.Tokens;
+using System;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using System.Text;
 using System.Threading.Tasks;
 using test.BusinessLogic.Interfaces;
 using test.BusinessLogic.Validators.PolicyValidator.UserValidator;
@@ -16,12 +22,14 @@ namespace test.BusinessLogic.Implementation
     {
         #region Attributes
         private readonly IUserRepository _userRepository;
+        private readonly IConfiguration _configuration;
         #endregion
 
         #region Constructor
-        public UserBL(IUserRepository userRepository)
+        public UserBL(IUserRepository userRepository , IConfiguration configuration)
         {
             _userRepository = userRepository;
+            _configuration = configuration;
         }
         #endregion
 
@@ -31,15 +39,36 @@ namespace test.BusinessLogic.Implementation
         /// </summary>
         /// <param name="user">UserDto object</param>
         /// <returns></returns>
-        public async Task<bool> GenerateTokenAsync(UserDto user)
+        public async Task<TokenDto> GenerateTokenAsync(UserDto user)
         {
-            return await ExecutionWrapperExtension.ExecuteWrapperAsync<bool, UserBL>(async () =>
+            return await ExecutionWrapperExtension.ExecuteWrapperAsync<TokenDto, UserBL>(async () =>
             {
                 ValidateRequiredData(user);
 
                 var userEntity = _userRepository.GetUserUserByUserName(user);
 
-                return await Task.FromResult(true);
+                var claims = new[]
+                {
+                    new Claim(JwtRegisteredClaimNames.Sub , user.UserLogin),
+                    new Claim(JwtRegisteredClaimNames.Jti , Guid.NewGuid().ToString())
+                };
+
+                var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Tokens:Key"]));
+                var credentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+                var token = new JwtSecurityToken(
+                    _configuration["Tokens:Isuser"],
+                    _configuration["Tokens:Audience"],
+                    claims,
+                    expires: DateTime.UtcNow.AddDays(1),
+                    signingCredentials: credentials);
+
+                var results = new TokenDto
+                { 
+                    Token = new JwtSecurityTokenHandler().WriteToken(token),
+                    Espiration = token.ValidTo
+                };
+
+                return await Task.FromResult(results);
             });
         }
         #endregion

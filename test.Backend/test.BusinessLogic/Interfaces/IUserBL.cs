@@ -13,6 +13,6 @@ namespace test.BusinessLogic.Interfaces
         /// </summary>
         /// <param name="user">UserDto object</param>
         /// <returns>bool</returns>
-        Task<bool> GenerateTokenAsync(UserDto user);
+        Task<TokenDto> GenerateTokenAsync(UserDto user);
     }
 }
