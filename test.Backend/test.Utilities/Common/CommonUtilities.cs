@@ -100,6 +100,32 @@ namespace test.Utilities.Common
 
             return result;
         }
+
+        /// <summary>
+        /// Basic encrypt
+        /// </summary>
+        /// <param name="encrypt"></param>
+        /// <returns></returns>
+        public static string Encrypt(this string encrypt)
+        {
+            string result = string.Empty;
+            byte[] encryted = System.Text.Encoding.Unicode.GetBytes(encrypt);
+            result = Convert.ToBase64String(encryted);
+            return result;
+        }
+
+        /// <summary>
+        /// Basic decrypt
+        /// </summary>
+        /// <param name="decrypt"></param>
+        /// <returns></returns>
+        public static string Dencrypt(this string decrypt)
+        {
+            string result = string.Empty;
+            byte[] encryted = System.Text.Encoding.Unicode.GetBytes(decrypt);
+            result = Convert.ToBase64String(encryted);
+            return result;
+        }
         #endregion
 
         #region "Private Methods"

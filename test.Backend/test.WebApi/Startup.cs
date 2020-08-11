@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -20,12 +21,15 @@ namespace test.WebApi
         // This method Get called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services
-                .AddMvcCoreWithAddOns(Configuration)
-                .AddVersioning()
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            //.AddMvcCoreWithAddOns(Configuration)
+
+            services.AddVersioning()
                 .AddSwaggerDocumentation()
                 .AddBusinessLogic()
-                .AddRepository(Configuration);
+                .AddRepository(Configuration)         
+                .AddAthentication(Configuration);
+
         }
 
         // This method Get called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -53,6 +57,7 @@ namespace test.WebApi
             app.UseHttpsRedirection()
             .UseMvc()
             .UseSwaggerDocumentation(Configuration, provider);
+            //.UseAuthentication();
         }
     }
 }

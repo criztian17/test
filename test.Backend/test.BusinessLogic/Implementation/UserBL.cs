@@ -3,6 +3,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using System;
 using System.IdentityModel.Tokens.Jwt;
+using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
@@ -47,6 +48,16 @@ namespace test.BusinessLogic.Implementation
 
                 var userEntity = _userRepository.GetUserUserByUserName(user);
 
+                //if (!userEntity.ToList().Any())
+                //{
+                //    throw new BusinessException(400, Constants.ConstantMessage.ErrorUserCredentials);
+                //}
+
+                //if (user.Password != user.Password)
+                //{
+                //    throw new BusinessException(400, Constants.ConstantMessage.ErrorUserCredentials);
+                //}
+
                 var claims = new[]
                 {
                     new Claim(JwtRegisteredClaimNames.Sub , user.UserLogin),
@@ -56,7 +67,7 @@ namespace test.BusinessLogic.Implementation
                 var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Tokens:Key"]));
                 var credentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
                 var token = new JwtSecurityToken(
-                    _configuration["Tokens:Isuser"],
+                    _configuration["Tokens:Issuer"],
                     _configuration["Tokens:Audience"],
                     claims,
                     expires: DateTime.UtcNow.AddDays(1),

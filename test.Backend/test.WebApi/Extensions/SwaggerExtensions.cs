@@ -22,10 +22,6 @@ namespace test.WebApi.Extensions
             services.AddSwaggerGen(options =>
                 //while we have multiple versions of dto objects this is needed to not break swagger
                 options.CustomSchemaIds(x => x.FullName)
-
-
-               
-
             );
 
             return services;
@@ -82,15 +78,18 @@ namespace test.WebApi.Extensions
                         Title = $"Test {description.ApiVersion}",
                         Version = description.ApiVersion.ToString(),
                     });
+                
             }
             options.EnableAnnotations();
 
             options.AddSecurityDefinition("Bearer", new ApiKeyScheme
             {
-                Description = "JWT Authorization header using the Bearer scheme. Example: \"Authorization: Bearer {token}\"",
+                Description = "Acces Token",
                 Name = "Authorization",
                 In = "header",
-                Type = "apiKey"
+                Type = "apiKey",
+                
+              
             });
 
         }

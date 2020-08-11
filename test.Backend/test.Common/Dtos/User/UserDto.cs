@@ -3,13 +3,8 @@
     /// <summary>
     /// UserDto Class
     /// </summary>
-    public class UserDto : IBaseDto
+    public class UserDto
     {
-        /// <summary>
-        /// User Id
-        /// </summary>
-        public int Id { get; set; }
-
         /// <summary>
         /// UserLogin
         /// </summary>

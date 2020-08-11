@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
 using test.BusinessLogic.Interfaces;
@@ -9,8 +11,10 @@ using test.Utilities.Extensions;
 
 namespace test.WebApi.Controllers
 {
+    
     [ApiVersion("1.0")]
-    [ApiController]
+    [ApiController ]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     public class ClientController : ControllerBase
     {
         #region Attributes
@@ -32,6 +36,7 @@ namespace test.WebApi.Controllers
         [Route("api/v{version:apiVersion}/client/")]
         [HttpGet]
         [SwaggerOperation("Get list of Clients")]
+        [SwaggerResponse(401, Description = "Unauthorized")]
         [SwaggerResponse(200, type: typeof(ICollection<ClientDto>))]
         [SwaggerResponse(400, type: typeof(List<RuleError>))]
         [SwaggerResponse(500, Description = "Internal Server Error")]

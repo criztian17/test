@@ -27,6 +27,7 @@ namespace test.WebApi.Extensions
                 .AddJsonFormatters()
                 .SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
+
             return services;
         }
     }

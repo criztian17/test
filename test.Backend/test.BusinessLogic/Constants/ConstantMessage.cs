@@ -37,7 +37,7 @@
         #endregion
 
         #region User
-        private const string ErrorUserCredentials = "The user or password are incorrect.";
+        public const string ErrorUserCredentials = "The user or password are incorrect.";
         #endregion
     }
 }
