@@ -3,6 +3,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using test.Repository.Entities;
 using test.Repository.Repositories.Interfaces;
+using test.Utilities.Common;
 
 namespace test.Repository
 {
@@ -56,6 +57,21 @@ namespace test.Repository
                 };
 
                 await _unitOfWork.DataContext.Coverages.AddRangeAsync(coverages);
+                await _unitOfWork.CommitAsync();
+            }
+
+            if (!_unitOfWork.DataContext.Users.Any())
+            {
+                var users = new List<UserEntity>
+                {
+                    new UserEntity {UserLogin = "cristian@test.com.co" , Password = CommonUtilities.Encrypt("cristian") },
+                    new UserEntity {UserLogin = "camilo@test.com.co" , Password = CommonUtilities.Encrypt("camilo") },
+                    new UserEntity {UserLogin = "luisa@test.com.co" , Password = CommonUtilities.Encrypt("luisa") },
+                    new UserEntity {UserLogin = "mariana@test.com.co" , Password = CommonUtilities.Encrypt("mariana") },
+                    
+                };
+
+                await _unitOfWork.DataContext.Users.AddRangeAsync(users);
                 await _unitOfWork.CommitAsync();
             }
         }

@@ -16,6 +16,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\test.Common\test.Common.csproj" />
+    <ProjectReference Include="..\test.Utilities\test.Utilities.csproj" />
   </ItemGroup>
 
   <ItemGroup>

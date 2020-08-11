@@ -12,6 +12,7 @@ using test.BusinessLogic.Validators.PolicyValidator.UserValidator;
 using test.Common.Dtos.User;
 using test.Repository.Repositories.Interfaces;
 using test.Utilities.ApiExceptions;
+using test.Utilities.Common;
 using test.Utilities.Extensions;
 
 namespace test.BusinessLogic.Implementation
@@ -27,7 +28,7 @@ namespace test.BusinessLogic.Implementation
         #endregion
 
         #region Constructor
-        public UserBL(IUserRepository userRepository , IConfiguration configuration)
+        public UserBL(IUserRepository userRepository, IConfiguration configuration)
         {
             _userRepository = userRepository;
             _configuration = configuration;
@@ -46,18 +47,17 @@ namespace test.BusinessLogic.Implementation
             {
                 ValidateRequiredData(user);
 
-                var userEntity = _userRepository.GetUserUserByUserName(user);
+                var userEntity = _userRepository.GetUserUserByUserName(user).ToList();
 
-                //if (!userEntity.ToList().Any())
-                //{
-                //    throw new BusinessException(400, Constants.ConstantMessage.ErrorUserCredentials);
-                //}
-
-                //if (user.Password != user.Password)
-                //{
-                //    throw new BusinessException(400, Constants.ConstantMessage.ErrorUserCredentials);
-                //}
-
+                if (!userEntity.Any())
+                {
+                    throw new BusinessException(400, Constants.ConstantMessage.ErrorUserCredentials);
+                }
+                
+                if (CommonUtilities.Decrypt(userEntity[0].Password) != user.Password)
+                {
+                    throw new BusinessException(400, Constants.ConstantMessage.ErrorUserCredentials);
+                }
                 var claims = new[]
                 {
                     new Claim(JwtRegisteredClaimNames.Sub , user.UserLogin),
@@ -74,7 +74,7 @@ namespace test.BusinessLogic.Implementation
                     signingCredentials: credentials);
 
                 var results = new TokenDto
-                { 
+                {
                     Token = new JwtSecurityTokenHandler().WriteToken(token),
                     Espiration = token.ValidTo
                 };

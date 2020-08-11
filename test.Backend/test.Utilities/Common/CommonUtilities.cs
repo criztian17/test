@@ -119,11 +119,11 @@ namespace test.Utilities.Common
         /// </summary>
         /// <param name="decrypt"></param>
         /// <returns></returns>
-        public static string Dencrypt(this string decrypt)
+        public static string Decrypt(this string decrypt)
         {
             string result = string.Empty;
-            byte[] encryted = System.Text.Encoding.Unicode.GetBytes(decrypt);
-            result = Convert.ToBase64String(encryted);
+            byte[] decryted = Convert.FromBase64String(decrypt);
+            result = System.Text.Encoding.Unicode.GetString(decryted);
             return result;
         }
         #endregion
